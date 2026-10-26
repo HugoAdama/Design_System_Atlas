@@ -78,9 +78,12 @@
 
     if (!sliderContainer || !rangeInput || !afterLayer || !handle) return;
 
+    const layer = afterLayer;
+    const h = handle;
+
     function updateSplit(pct: number) {
-      afterLayer.style.clipPath = `inset(0 0 0 ${pct}%)`;
-      handle.style.left = `${pct}%`;
+      layer.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      h.style.left = `${pct}%`;
     }
 
     rangeInput.addEventListener('input', () => {

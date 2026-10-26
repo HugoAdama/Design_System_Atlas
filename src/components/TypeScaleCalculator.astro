@@ -89,7 +89,9 @@
 
       cssBlock += '}';
       currentCSS = cssBlock;
-      listContainer.innerHTML = html;
+      if (listContainer) {
+        listContainer.innerHTML = html;
+      }
     }
 
     ratioSelect.addEventListener('change', recalculate);
