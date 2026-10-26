@@ -29,12 +29,12 @@ const resources = [
 ---
 
 <section class="ch" id="recursos">
-  <div class="side">
+  <div class="side reveal-on-scroll">
     <h2>Recursos, blogs y herramientas</h2>
     <p>La sección a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
   </div>
   <div class="body idx">
-    <div class="resource-tabs" role="tablist">
+    <div class="resource-tabs reveal-on-scroll" role="tablist">
       <button type="button" class="resource-tab-btn" data-cat="all" aria-selected="true">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="10"></circle>
@@ -74,7 +74,7 @@ const resources = [
       </button>
     </div>
 
-    <ul id="resource-list">
+    <ul id="resource-list" class="reveal-on-scroll">
       {resources.map((item) => (
         <li class="resource-item" data-category={item.cat}>
           <a href={item.url} target="_blank" rel="noopener noreferrer">
