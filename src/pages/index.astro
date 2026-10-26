@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Masthead from '../components/Masthead.astro';
+import Cover from '../components/Cover.astro';
+import SectionFundamentos from '../components/SectionFundamentos.astro';
+import SectionUX from '../components/SectionUX.astro';
+import SectionFrontend from '../components/SectionFrontend.astro';
+import SectionTendencias from '../components/SectionTendencias.astro';
+import SectionRecursos from '../components/SectionRecursos.astro';
+import Footer from '../components/Footer.astro';
+import SearchModal from '../components/SearchModal.astro';
+---
+
+<Layout
+  title="La arquitectura invisible de cada pantalla | Atlas de diseño"
+  description="Una guía de consulta permanente sobre design systems, arquitectura de información, patrones frontend y tendencias visuales."
+>
+  <Masthead />
+  
+  <main id="top">
+    <Cover />
+    <SectionFundamentos />
+    <SectionUX />
+    <SectionFrontend />
+    <SectionTendencias />
+    <SectionRecursos />
+  </main>
+
+  <Footer />
+  <SearchModal />
+</Layout>

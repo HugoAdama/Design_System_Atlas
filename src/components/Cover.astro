@@ -1,0 +1,41 @@
+---
+const tocItems = [
+  { href: "#fundamentos", title: "Fundamentos", subtitle: "Tokens DTCG, componentes, accesibilidad y gobernanza" },
+  { href: "#ux", title: "Información y UX", subtitle: "Leyes cognitivas, jerarquía y modelos de navegación" },
+  { href: "#frontend", title: "Frontend", subtitle: "Modern CSS, Core Web Vitals e islas Astro" },
+  { href: "#tendencias", title: "Tendencias", subtitle: "Neobrutalismo, Bento, Glassmorphism y kinetic type" },
+  { href: "#recursos", title: "Recursos", subtitle: "Especificaciones oficiales, blogs y herramientas" },
+];
+---
+
+<div class="cover">
+  <div>
+    <div class="cover-badge">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+      </svg>
+      <span>Atlas de diseño &bull; Edición 2026</span>
+    </div>
+
+    <h1>
+      <span>La arquitectura invisible</span>
+      <span class="i">de cada pantalla</span>
+    </h1>
+    <div class="row">
+      <p>
+        Una guía de consulta permanente sobre design systems, arquitectura de información, patrones frontend modernos y tendencias visuales. Para leer con calma o para resolver una duda en segundos.
+      </p>
+      <ul class="toc">
+        {tocItems.map((item) => (
+          <li>
+            <a href={item.href}>
+              <b>{item.title}</b>
+              <span>{item.subtitle}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>

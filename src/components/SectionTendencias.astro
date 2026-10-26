@@ -1,0 +1,99 @@
+---
+// Visual trends gallery with modern aesthetics and micro-interactions
+---
+
+<section class="ch" id="tendencias">
+  <div class="side">
+    <h2>Tendencias y estilos visuales</h2>
+    <p>Una sección que se actualiza y que también sirve como archivo de lo que fue y de lo que se consolidó.</p>
+  </div>
+  <div class="body">
+    <div class="gal">
+      <!-- Card 1: Glassmorphism & Spatial UI -->
+      <div class="s s1">
+        <span class="o1"></span>
+        <span class="o2"></span>
+        <div class="glass">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Desenfoque backdrop-filter</span>
+        </div>
+        <h4>Glassmorphism & Spatial UI</h4>
+        <p>Evolucionó de un efecto llamativo a una convención ergonómica para barras superiores flotantes, modales y overlays que mantienen el contexto visual de fondo.</p>
+      </div>
+
+      <!-- Card 2: Bento Grid -->
+      <div class="s s2">
+        <div class="mini" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <h4>Bento Grid</h4>
+        <p>Inspirado en las cajas de comida japonesas. Agrupa piezas heterogéneas con jerarquía modular para dashboards y landing pages densas en información.</p>
+      </div>
+
+      <!-- Card 3: Tipografía Expresiva -->
+      <div class="s s3" tabindex="0">
+        <div class="vf" aria-hidden="true">Aa</div>
+        <h4>Tipografía expresiva</h4>
+        <p>Uso de <i>Variable Fonts</i> (con ejes ópticos <code>opsz</code>, peso <code>wght</code> e inclinación). Interactiva: pasa el cursor o enfoca.</p>
+      </div>
+
+      <!-- Card 4: Minimalismo en capas -->
+      <div class="s s4">
+        <div class="float">
+          <span>Capas con sombra</span>
+        </div>
+        <h4>Minimalismo en capas</h4>
+        <p>Superficies limpias con elevación deliberada. Reemplaza gradientes excesivos con capas superpuestas de alto contraste.</p>
+      </div>
+
+      <!-- Card 5: Neobrutalismo Digital -->
+      <div class="s s5">
+        <div class="neobrutal-sticker">REGLA_01</div>
+        <h4>Neobrutalismo Digital</h4>
+        <p>Bordes negros marcados de 2 a 3px, sombras duras sin desenfoque (<code>4px 4px 0 #000</code>), colores vibrantes y tipografía monoespaciada honesta.</p>
+      </div>
+
+      <!-- Card 6: Micro-interacciones & Spring Physics -->
+      <div class="s s6">
+        <div class="interactive-spring-box">
+          <button type="button" class="spring-btn" id="spring-demo-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span id="spring-label">Interacción con muelle</span>
+          </button>
+        </div>
+        <h4>Física y Feedback Háptico</h4>
+        <p>Transiciones con curvas elásticas <code>cubic-bezier(0.34, 1.56, 0.64, 1)</code> que aportan peso y tactilidad física a los botones y tarjetas.</p>
+      </div>
+    </div>
+
+    <p class="rev">Última revisión: Octubre de 2026.</p>
+  </div>
+</section>
+
+<script>
+  function setupSpringInteraction() {
+    const btn = document.getElementById('spring-demo-btn');
+    const label = document.getElementById('spring-label');
+    if (btn && label) {
+      btn.addEventListener('click', () => {
+        label.textContent = "¡Resorte activado!";
+        setTimeout(() => {
+          label.textContent = "Interacción con muelle";
+        }, 1500);
+      });
+    }
+  }
+
+  setupSpringInteraction();
+  document.addEventListener('astro:page-load', setupSpringInteraction);
+</script>

@@ -1,0 +1,131 @@
+---
+// Interactive Search Modal for Atlas de diseño
+const searchData = [
+  { title: "Design Tokens (DTCG)", section: "Fundamentos", href: "#fundamentos", desc: "Taxonomía W3C: Global, Semántico y Componente en formato estándar." },
+  { title: "Playground de Tokens 2.0", section: "Fundamentos", href: "#spec", desc: "Experimentación en vivo de color, bordes, espaciado, elevación y tipografía." },
+  { title: "Matriz de Estados de Componentes", section: "Fundamentos", href: "#estados", desc: "Default, hover, active, focus-visible, disabled y loading." },
+  { title: "Accesibilidad y Contraste WCAG 2.2", section: "Fundamentos", href: "#accesibilidad", desc: "Ratios 4.5:1, 3:1, APCA y contraste no dependiente del color." },
+  { title: "Gobernanza y DesignOps", section: "Fundamentos", href: "#fundamentos", desc: "Modelos centralizados vs distribuidos y ciclo de contribución." },
+  { title: "Ley de Hick", section: "UX e Información", href: "#ux-leyes", desc: "El tiempo de decisión aumenta logarítmicamente con el número de opciones." },
+  { title: "Ley de Fitts", section: "UX e Información", href: "#ux-leyes", desc: "Tamaño y distancia mínima de objetivos interactivos (44x44px)." },
+  { title: "Ley de Miller", section: "UX e Información", href: "#ux-leyes", desc: "Capacidad de memoria de trabajo humana: 7 ± 2 trozos (chunks)." },
+  { title: "Ley de Jakob", section: "UX e Información", href: "#ux-leyes", desc: "Los usuarios esperan que tu interfaz funcione como las que ya conocen." },
+  { title: "Anatomía de Navegación y Empty States", section: "UX e Información", href: "#ux", desc: "Header, Sidebar, Bottom Navigation y estados de carga o error." },
+  { title: "Modern CSS: @container queries", section: "Frontend", href: "#frontend-moderno", desc: "Componentes adaptables a su contenedor sin depender del viewport." },
+  { title: "Selector relacional :has()", section: "Frontend", href: "#frontend-moderno", desc: "Estilos condicionales ascendentes nativos sin necesidad de JS." },
+  { title: "View Transitions API", section: "Frontend", href: "#frontend-moderno", desc: "Transiciones nativas y fluidas entre estados y páginas." },
+  { title: "Core Web Vitals para UI Designers", section: "Frontend", href: "#frontend-cwv", desc: "INP (Interaction to Next Paint), LCP y CLS explicados para diseño." },
+  { title: "Arquitectura de Islas Astro", section: "Frontend", href: "#frontend", desc: "HTML estático con hidratación parcial client:visible." },
+  { title: "Glassmorphism & Spatial UI", section: "Tendencias", href: "#tendencias", desc: "Desenfoque backdrop-filter, refracción y elevaciones de cristal." },
+  { title: "Bento Grid Layout", section: "Tendencias", href: "#tendencias", desc: "Composición modular y escaneable para dashboards y landings." },
+  { title: "Tipografía Expresiva & Variable", section: "Tendencias", href: "#tendencias", desc: "Ejes variables (wght, opsz, wdth) y tipografía cinética." },
+  { title: "Neobrutalismo Digital", section: "Tendencias", href: "#tendencias", desc: "Bordes negros de 3px, sombras duras y paletas primarias." },
+  { title: "Recursos y Especificaciones", section: "Recursos", href: "#recursos", desc: "W3C DTCG, WAI-ARIA, blogs técnicos y bibliotecas de componentes." },
+];
+---
+
+<dialog id="search-dialog" class="search-dialog" aria-label="Buscador del Atlas">
+  <div class="search-dialog-inner">
+    <div class="search-input-wrapper">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="search"
+        id="search-input"
+        class="search-input"
+        placeholder="Buscar conceptos, tokens, leyes de UX o patrones..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button type="button" id="search-close" class="search-close-btn" aria-label="Cerrar búsqueda">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <ul id="search-results" class="search-results-list" role="listbox">
+      {searchData.map((item, index) => (
+        <li class="search-item" data-title={item.title.toLowerCase()} data-desc={item.desc.toLowerCase()} data-section={item.section.toLowerCase()}>
+          <a href={item.href} class="search-link">
+            <span class="search-item-section">{item.section}</span>
+            <span class="search-item-title">{item.title}</span>
+            <span class="search-item-desc">{item.desc}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="search-footer-hint">
+      <span>Navegar con ↑ / ↓ &bull; Enter para abrir</span>
+      <span>ESC para cerrar</span>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function setupSearch() {
+    const dialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
+    const input = document.getElementById('search-input') as HTMLInputElement | null;
+    const closeBtn = document.getElementById('search-close');
+    const openBtns = document.querySelectorAll('.open-search-trigger');
+    const items = document.querySelectorAll('.search-item');
+
+    if (!dialog || !input) return;
+
+    function openModal() {
+      dialog?.showModal();
+      input?.focus();
+      input?.select();
+    }
+
+    function closeModal() {
+      dialog?.close();
+    }
+
+    openBtns.forEach((btn) => btn.addEventListener('click', openModal));
+    closeBtn?.addEventListener('click', closeModal);
+
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) closeModal();
+    });
+
+    // Atajo global Ctrl+K o Cmd+K o '/'
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (dialog.open) closeModal();
+        else openModal();
+      } else if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    // Filtro en vivo
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      items.forEach((it) => {
+        const el = it as HTMLElement;
+        const title = el.dataset.title || '';
+        const desc = el.dataset.desc || '';
+        const section = el.dataset.section || '';
+        const match = !q || title.includes(q) || desc.includes(q) || section.includes(q);
+        el.style.display = match ? 'block' : 'none';
+      });
+    });
+
+    // Cerrar al hacer clic en un link
+    dialog.querySelectorAll('.search-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        closeModal();
+      });
+    });
+  }
+
+  setupSearch();
+  document.addEventListener('astro:page-load', setupSearch);
+</script>

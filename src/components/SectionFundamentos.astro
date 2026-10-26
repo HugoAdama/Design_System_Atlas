@@ -1,0 +1,177 @@
+---
+import SpecimenPlate from './SpecimenPlate.astro';
+---
+
+<section class="ch" id="fundamentos">
+  <div class="side">
+    <h2>Fundamentos de un sistema de diseño</h2>
+    <p>La estructura viva que mantiene coherentes a todos los productos digitales de una organización.</p>
+  </div>
+  <div class="body">
+    <p>
+      Una guía de estilo dice cómo se ve una marca. Una biblioteca de componentes entrega las piezas en código. Un sistema de diseño reúne ambas cosas y añade tokens, patrones, documentación y reglas para contribuir. Invertir en esa documentación se paga solo: menos decisiones repetidas, menos inconsistencias y entregas más rápidas.
+    </p>
+    <blockquote>Un sistema de diseño no es un documento: es una arquitectura.</blockquote>
+
+    <SpecimenPlate />
+
+    <h3>Taxonomía de Design Tokens (Estándar W3C / DTCG)</h3>
+    <p>
+      La especificación del <i>Design Tokens Community Group (W3C)</i> define cómo formalizar las decisiones de diseño para que se traduzcan de manera agnóstica a CSS, iOS, Android y Flutter. Se organizan en tres niveles jerárquicos:
+    </p>
+    <dl>
+      <dt>1. Tokens Globales (Choices)</dt>
+      <dd>Los valores primitivos sin contexto de uso: escalas cromáticas, tamaños de fuente y radios (ej. <code>color.blue.600: #1d4ed8</code>).</dd>
+      <dt>2. Tokens Semánticos (Decisions)</dt>
+      <dd>La intención de diseño comunicada con significado: <code>color.action.primary: {"{"}color.blue.600{"}"}</code>, <code>feedback.error: {"{"}color.red.500{"}"}</code>.</dd>
+      <dt>3. Tokens de Componente (Overrides)</dt>
+      <dd>La vinculación directa con el elemento final: <code>button.primary.background: {"{"}color.action.primary{"}"}</code>.</dd>
+    </dl>
+
+    <div class="code-wrapper">
+      <div class="code-badge">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <span>tokens.json (W3C DTCG Format)</span>
+      </div>
+      <pre><code>{`{
+  "color": {
+    "brand": {
+      "primary": {
+        "$value": "#c2114f",
+        "$type": "color",
+        "$description": "Color principal de interacción y botones clave"
+      }
+    }
+  },
+  "spacing": {
+    "base": {
+      "$value": "16px",
+      "$type": "dimension"
+    }
+  }
+}`}</code></pre>
+    </div>
+
+    <!-- Matriz de Estados de Componentes -->
+    <h3 id="estados">Matriz de estados indispensables</h3>
+    <p>
+      Todo componente interactivo debe diseñar y codificar sus 6 estados fundamentales para garantizar previsibilidad y accesibilidad cognitiva:
+    </p>
+
+    <div class="states-grid">
+      <div class="state-card">
+        <span class="state-label">Default</span>
+        <button type="button" class="state-preview-btn btn-state-default">Acción</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">:hover</span>
+        <button type="button" class="state-preview-btn btn-state-hover">Acción</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">:active</span>
+        <button type="button" class="state-preview-btn btn-state-active">Acción</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">:focus-visible</span>
+        <button type="button" class="state-preview-btn btn-state-focus">Acción</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">:disabled</span>
+        <button type="button" disabled class="state-preview-btn btn-state-disabled">Acción</button>
+      </div>
+      <div class="state-card">
+        <span class="state-label">Loading</span>
+        <button type="button" class="state-preview-btn btn-state-loading">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>Espera...</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Accesibilidad y Contraste -->
+    <div class="callout-box" id="accesibilidad">
+      <h4>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        Accesibilidad y Contraste (WCAG 2.2 / APCA)
+      </h4>
+      <p>
+        Un sistema de diseño profesional no aprueba paletas sin verificar ratios de contraste. La norma WCAG 2.2 exige los siguientes estándares mínimos en cada tema:
+      </p>
+      <div class="contrast-meter-grid">
+        <div class="contrast-pill">
+          <span class="contrast-ratio">4.5:1</span>
+          <span class="contrast-desc">Texto normal (menor a 18pt) contra su fondo de lectura (Nivel AA).</span>
+        </div>
+        <div class="contrast-pill">
+          <span class="contrast-ratio">3.0:1</span>
+          <span class="contrast-desc">Texto grande (18pt+) y componentes de interfaz interactivos (bordes, inputs, iconos).</span>
+        </div>
+        <div class="contrast-pill">
+          <span class="contrast-ratio">7.0:1</span>
+          <span class="contrast-desc">Nivel AAA reforzado, ideal para dashboards médicos y lectura continua.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Atomic Design</h3>
+    <p class="note">El método de Brad Frost: cada nivel se arma con el anterior.</p>
+    <div class="atoms">
+      <div>Átomos</div>
+      <div>Moléculas</div>
+      <div>Organismos</div>
+      <div>Templates</div>
+      <div>Páginas</div>
+    </div>
+
+    <h3>Gobernanza y DesignOps</h3>
+    <p>Quién puede cambiar el sistema define cuánto dura.</p>
+    <div class="gov">
+      <figure>
+        <svg viewBox="0 0 210 130" role="img" aria-label="Un equipo central conectado con cuatro equipos">
+          <g>
+            <line x1="105" y1="65" x2="30" y2="25" />
+            <line x1="105" y1="65" x2="180" y2="25" />
+            <line x1="105" y1="65" x2="30" y2="105" />
+            <line x1="105" y1="65" x2="180" y2="105" />
+          </g>
+          <circle cx="105" cy="65" r="22" style="fill:var(--lilac)" />
+          <circle cx="30" cy="25" r="10" />
+          <circle cx="180" cy="25" r="10" />
+          <circle cx="30" cy="105" r="10" />
+          <circle cx="180" cy="105" r="10" />
+        </svg>
+        <figcaption><b>Centralizado.</b> Un equipo decide y mantiene: más coherencia, menos velocidad.</figcaption>
+      </figure>
+
+      <figure>
+        <svg viewBox="0 0 210 130" role="img" aria-label="Cuatro equipos conectados entre sí">
+          <g>
+            <line x1="30" y1="25" x2="180" y2="25" />
+            <line x1="30" y1="25" x2="30" y2="105" />
+            <line x1="180" y1="25" x2="180" y2="105" />
+            <line x1="30" y1="105" x2="180" y2="105" />
+            <line x1="30" y1="25" x2="180" y2="105" />
+            <line x1="180" y1="25" x2="30" y2="105" />
+          </g>
+          <circle cx="30" cy="25" r="14" />
+          <circle cx="180" cy="25" r="14" />
+          <circle cx="30" cy="105" r="14" />
+          <circle cx="180" cy="105" r="14" style="fill:var(--lilac)" />
+        </svg>
+        <figcaption><b>Distribuido.</b> Varios equipos contribuyen: más alcance, exige reglas claras.</figcaption>
+      </figure>
+    </div>
+
+    <ol class="seq">
+      <li><b>Propuesta</b><span>Alguien detecta una necesidad.</span></li>
+      <li><b>Revisión</b><span>Se evalúa contra el sistema.</span></li>
+      <li><b>Integración</b><span>Se documenta y se publica.</span></li>
+    </ol>
+    <p class="note" style="margin-top:20px">DesignOps sostiene este ciclo con herramientas, calendario y comunicación para que el sistema siga vivo.</p>
+  </div>
+</section>

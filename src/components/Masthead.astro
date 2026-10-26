@@ -1,0 +1,94 @@
+---
+const navLinks = [
+  { href: "#fundamentos", label: "Fundamentos" },
+  { href: "#ux", label: "Información y UX" },
+  { href: "#frontend", label: "Frontend" },
+  { href: "#tendencias", label: "Tendencias" },
+  { href: "#recursos", label: "Recursos" },
+];
+---
+
+<header class="mast">
+  <div class="reading-bar" id="reading-bar" aria-hidden="true"></div>
+  <div class="mast-inner">
+    <a class="t" href="#top">Atlas de diseño</a>
+    
+    <nav aria-label="Capítulos">
+      {navLinks.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <div class="mast-actions">
+      <!-- Search button with SVG icon -->
+      <button
+        class="icon-btn open-search-trigger"
+        type="button"
+        aria-label="Abrir buscador"
+        title="Buscar conceptos (Ctrl + K)"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Buscar</span>
+        <span class="kbd-hint">Ctrl K</span>
+      </button>
+
+      <!-- Theme toggle button with Sun / Moon SVG icons -->
+      <button
+        id="theme-toggle"
+        class="icon-btn"
+        type="button"
+        aria-label="Cambiar tema claro u oscuro"
+        title="Alternar tema claro/oscuro"
+      >
+        <svg id="theme-icon-sun" class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span id="theme-btn-label">Tema</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupMasthead() {
+    // 1. Reading Progress Bar
+    const bar = document.getElementById('reading-bar');
+    if (bar) {
+      window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+        bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      }, { passive: true });
+    }
+
+    // 2. Theme Toggle
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const isDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const nextTheme = isDark ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', nextTheme);
+        try {
+          localStorage.setItem('theme', nextTheme);
+        } catch (_) {}
+      });
+    }
+  }
+
+  setupMasthead();
+  document.addEventListener('astro:page-load', setupMasthead);
+</script>

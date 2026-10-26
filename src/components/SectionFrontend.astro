@@ -1,0 +1,135 @@
+---
+const patterns = [
+  { name: "Component-based", solves: "Interfaces armadas con piezas reutilizables, la base de toda librería." },
+  { name: "Micro-frontends", solves: "Equipos independientes publican partes distintas de un mismo producto." },
+  { name: "JAMstack y SSG", solves: "Páginas generadas de antemano: rápidas, seguras y buenas para el SEO." },
+  { name: "SSR y SPA", solves: "Decidir dónde se renderiza: en el servidor o en el navegador." },
+  { name: "Islas (Island Architecture)", solves: "HTML estático con zonas interactivas que cargan solo cuando hacen falta." },
+  { name: "Headless, provider, hooks", solves: "Separar la lógica del aspecto para reutilizarla con otro estilo." },
+  { name: "Code splitting, lazy loading", solves: "Descargar solo el código que la persona va a usar." },
+];
+
+const modernCssFeatures = [
+  {
+    feature: "@container (Container Queries)",
+    desc: "Permite que una tarjeta cambie su disposición (vertical a horizontal) según el ancho de su columna padre, y no del viewport global de la pantalla.",
+    syntax: "@container (min-width: 400px) { ... }"
+  },
+  {
+    feature: "Selector relacional :has()",
+    desc: "Permite aplicar estilos al contenedor padre o a elementos adyacentes en función de sus hijos o de estados interactivos sin una sola línea de JS.",
+    syntax: "article:has(figure) { grid-column: span 2; }"
+  },
+  {
+    feature: "View Transitions API",
+    desc: "Transiciones cinemáticas fluidas entre cambios de ruta en SPA y MPA nativas, manteniendo elementos compartidos en pantalla.",
+    syntax: "document.startViewTransition(() => updateDOM());"
+  },
+  {
+    feature: "color-mix() y @layer",
+    desc: "Mezcla de colores dinámica y control explícito del orden de cascada para tokens sin pelear contra la especificidad.",
+    syntax: "background: color-mix(in srgb, var(--rose) 20%, transparent);"
+  }
+];
+---
+
+<section class="ch" id="frontend">
+  <div class="side">
+    <h2>Arquitectura frontend y patrones técnicos</h2>
+    <p>La capa de implementación que garantiza escalabilidad, velocidad y mantenimiento.</p>
+  </div>
+  <div class="body">
+    <p>
+      Un sistema de diseño solo es verdaderamente reutilizable si el código que lo implementa está bien organizado. La arquitectura de componentes desacopla decisiones estéticas de la lógica de negocio.
+    </p>
+
+    <!-- Modern CSS APIs -->
+    <h3 id="frontend-moderno">Capacidades modernas de CSS (2025–2026)</h3>
+    <p>El estándar web ha absorbido patrones que antes requerían complejas librerías de JavaScript:</p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Capacidad nativa</th>
+            <th>Qué resuelve en la arquitectura</th>
+            <th>Sintaxis clave</th>
+          </tr>
+        </thead>
+        <tbody>
+          {modernCssFeatures.map((f) => (
+            <tr>
+              <td>{f.feature}</td>
+              <td>{f.desc}</td>
+              <td><code>{f.syntax}</code></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Core Web Vitals para diseñadores -->
+    <h3 id="frontend-cwv">Core Web Vitals para Diseñadores de UI</h3>
+    <p>Las decisiones visuales determinan directamente el rendimiento real experimentado por el usuario:</p>
+
+    <div class="cwv-grid">
+      <div class="cwv-card">
+        <span class="cwv-badge">INP</span>
+        <div class="cwv-metric">Interaction to Next Paint (&le; 200ms)</div>
+        <p class="cwv-desc">Mide la latencia de respuesta visual tras un clic o toque. Reducir manipulaciones pesadas del DOM en handlers.</p>
+      </div>
+      <div class="cwv-card">
+        <span class="cwv-badge">LCP</span>
+        <div class="cwv-metric">Largest Contentful Paint (&le; 2.5s)</div>
+        <p class="cwv-desc">Momento en que el bloque visual principal se pinta. Optimizar tipografías web (font-display: swap) e imágenes hero.</p>
+      </div>
+      <div class="cwv-card">
+        <span class="cwv-badge">CLS</span>
+        <div class="cwv-metric">Cumulative Layout Shift (&le; 0.1)</div>
+        <p class="cwv-desc">Inestabilidad visual o saltos de pantalla. Reservar dimensiones fijas (aspect-ratio) para imágenes, banners y anuncios.</p>
+      </div>
+    </div>
+
+    <h3>Patrones arquitectónicos de interfaz</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Patrón</th>
+            <th>Qué resuelve</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patterns.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.solves}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Una isla Astro en la práctica</h3>
+    <div class="code-wrapper">
+      <div class="code-badge">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <span>src/pages/tienda.astro</span>
+      </div>
+      <pre><code><i>---</i>
+import <b>Carrito</b> from "../components/Carrito.tsx";
+import <b>FichaProducto</b> from "../components/FichaProducto.astro";
+<i>---</i>
+&lt;h1&gt;Tienda de diseño&lt;/h1&gt;
+&lt;<b>FichaProducto</b> /&gt; <i>&lt;!-- HTML 100% estático sin JavaScript --&gt;</i>
+&lt;<b>Carrito</b> client:visible /&gt; <i>&lt;!-- Isla interactiva: se hidrata solo al asomarse al viewport --&gt;</i></code></pre>
+    </div>
+
+    <p class="note" style="margin-top:20px">
+      Stack de referencia recomendado: TypeScript estricto, Astro / Server Components, Tailwind v4 / CSS Tokens, componentes Headless (Radix UI / Ark UI) y Storybook para catalogación visual.
+    </p>
+  </div>
+</section>

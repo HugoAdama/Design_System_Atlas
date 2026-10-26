@@ -1,0 +1,119 @@
+---
+const resources = [
+  // Especificaciones
+  { cat: "specs", name: "W3C Design Tokens Community Group", tag: "especificación oficial", url: "https://design-tokens.github.io/community-group/format/" },
+  { cat: "specs", name: "WAI-ARIA Authoring Practices Guide (APG)", tag: "patrones accesibles W3C", url: "https://www.w3.org/WAI/ARIA/apg/" },
+  { cat: "specs", name: "Open Props", tag: "tokens CSS estándar", url: "https://open-props.style/" },
+  
+  // Herramientas
+  { cat: "tools", name: "zeroheight", tag: "documentar sistemas", url: "https://zeroheight.com" },
+  { cat: "tools", name: "Storybook", tag: "taller de componentes aislados", url: "https://storybook.js.org" },
+  { cat: "tools", name: "Subframe", tag: "del diseño visual al código", url: "https://www.subframe.com" },
+  { cat: "tools", name: "Lucide Icons", tag: "iconografía SVG coherente", url: "https://lucide.dev" },
+  { cat: "tools", name: "Tailwind CSS", tag: "framework con tokens", url: "https://tailwindcss.com" },
+  { cat: "tools", name: "Radix UI Primitives", tag: "componentes accesibles sin estilos", url: "https://www.radix-ui.com" },
+
+  // UX & Arquitectura
+  { cat: "ux", name: "Laws of UX (Jon Yablonski)", tag: "principios cognitivos", url: "https://lawsofux.com" },
+  { cat: "ux", name: "Optimal Workshop", tag: "card sorting y tree testing", url: "https://www.optimalworkshop.com" },
+  { cat: "ux", name: "Maze User Testing", tag: "pruebas remotas", url: "https://maze.co" },
+  { cat: "ux", name: "Nielsen Norman Group", tag: "estudios de usabilidad", url: "https://www.nngroup.com" },
+
+  // Blogs y Referencias
+  { cat: "blogs", name: "Smashing Magazine", tag: "artículos de arquitectura web", url: "https://www.smashingmagazine.com" },
+  { cat: "blogs", name: "CSS-Tricks", tag: "almanaque de selectores", url: "https://css-tricks.com" },
+  { cat: "blogs", name: "Codrops", tag: "laboratorio de interacción", url: "https://tympanus.net/codrops" },
+  { cat: "blogs", name: "A List Apart", tag: "diseño web editorial", url: "https://alistapart.com" },
+  { cat: "blogs", name: "Figma Design Systems Blog", tag: "casos de estudio", url: "https://www.figma.com/blog" }
+];
+---
+
+<section class="ch" id="recursos">
+  <div class="side">
+    <h2>Recursos, blogs y herramientas</h2>
+    <p>La sección a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
+  </div>
+  <div class="body idx">
+    <div class="resource-tabs" role="tablist">
+      <button type="button" class="resource-tab-btn" data-cat="all" aria-selected="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>Todos</span>
+      </button>
+      <button type="button" class="resource-tab-btn" data-cat="specs" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        <span>Especificaciones W3C</span>
+      </button>
+      <button type="button" class="resource-tab-btn" data-cat="tools" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+        <span>Herramientas</span>
+      </button>
+      <button type="button" class="resource-tab-btn" data-cat="ux" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>UX & Usabilidad</span>
+      </button>
+      <button type="button" class="resource-tab-btn" data-cat="blogs" aria-selected="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Publicaciones</span>
+      </button>
+    </div>
+
+    <ul id="resource-list">
+      {resources.map((item) => (
+        <li class="resource-item" data-category={item.cat}>
+          <a href={item.url} target="_blank" rel="noopener noreferrer">
+            <b>
+              <span>{item.name}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </b>
+            <span>{item.tag}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  function setupResourceFilter() {
+    const tabs = document.querySelectorAll('.resource-tab-btn');
+    const items = document.querySelectorAll('.resource-item');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+
+        const cat = (tab as HTMLElement).dataset.cat;
+        items.forEach((it) => {
+          const itemEl = it as HTMLElement;
+          const match = cat === 'all' || itemEl.dataset.category === cat;
+          itemEl.style.display = match ? 'block' : 'none';
+        });
+      });
+    });
+  }
+
+  setupResourceFilter();
+  document.addEventListener('astro:page-load', setupResourceFilter);
+</script>

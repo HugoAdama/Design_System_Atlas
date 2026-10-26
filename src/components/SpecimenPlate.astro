@@ -1,0 +1,169 @@
+---
+// Interactive design token specimen playground 2.0
+---
+
+<figure>
+  <div class="plate">
+    <div class="spec" id="spec">
+      <h4>Boletín del atlas</h4>
+      <p>Una carta al mes, sin ruido ni algoritmos.</p>
+      <div class="r">
+        <span class="inp">correo@ejemplo.com</span>
+        <button class="btn" type="button">Suscribirme</button>
+      </div>
+      <span class="tag">Gratis</span>
+    </div>
+
+    <div class="ctrl">
+      <!-- Color de acción -->
+      <fieldset>
+        <legend>Color de acción (--t-accent)</legend>
+        <div class="opts" data-k="--t-accent">
+          <button
+            class="dot"
+            type="button"
+            aria-label="Rosa"
+            aria-pressed="true"
+            data-v="#c2114f"
+            style="background:#c2114f"
+          ></button>
+          <button
+            class="dot"
+            type="button"
+            aria-label="Bosque"
+            aria-pressed="false"
+            data-v="#1f6b53"
+            style="background:#1f6b53"
+          ></button>
+          <button
+            class="dot"
+            type="button"
+            aria-label="Ultramar"
+            aria-pressed="false"
+            data-v="#3b2fd9"
+            style="background:#3b2fd9"
+          ></button>
+          <button
+            class="dot"
+            type="button"
+            aria-label="Ámbar"
+            aria-pressed="false"
+            data-v="#d97706"
+            style="background:#d97706"
+          ></button>
+        </div>
+      </fieldset>
+
+      <!-- Esquinas / Radio -->
+      <fieldset>
+        <legend>Esquinas (--t-radius)</legend>
+        <div class="opts" data-k="--t-radius">
+          <button type="button" aria-pressed="false" data-v="0px">Rectas</button>
+          <button type="button" aria-pressed="true" data-v="8px">Suaves</button>
+          <button type="button" aria-pressed="false" data-v="999px">Píldora</button>
+        </div>
+      </fieldset>
+
+      <!-- Espaciado -->
+      <fieldset>
+        <legend>Espacio (--t-space)</legend>
+        <div class="opts" data-k="--t-space">
+          <button type="button" aria-pressed="false" data-v="10px">10px</button>
+          <button type="button" aria-pressed="true" data-v="16px">16px</button>
+          <button type="button" aria-pressed="false" data-v="24px">24px</button>
+        </div>
+      </fieldset>
+
+      <!-- Elevación y Sombra -->
+      <fieldset>
+        <legend>Elevación (--t-shadow)</legend>
+        <div class="opts" data-k="--t-shadow">
+          <button type="button" aria-pressed="false" data-v="none">Plana</button>
+          <button type="button" aria-pressed="true" data-v="0 4px 12px rgba(20,32,28,0.08)">Sutil</button>
+          <button type="button" aria-pressed="false" data-v="0 16px 32px -4px rgba(20,32,28,0.22)">Flotante</button>
+          <button type="button" aria-pressed="false" data-v="5px 5px 0 #14201c">Dura</button>
+        </div>
+      </fieldset>
+
+      <!-- Tipografía del espécimen -->
+      <fieldset style="margin:0">
+        <legend>Tipografía (--t-font)</legend>
+        <div class="opts" data-k="--t-font">
+          <button type="button" aria-pressed="true" data-v="var(--sans)">Sans</button>
+          <button type="button" aria-pressed="false" data-v="var(--serif)">Serif</button>
+        </div>
+      </fieldset>
+
+      <!-- Botón Copiar Tokens CSS con SVG -->
+      <div class="spec-copy-row">
+        <button type="button" id="copy-spec-tokens" class="copy-tokens-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="copy-spec-label">Copiar tokens CSS</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <figcaption>
+    <b>Figura 1. Playground de tokens.</b> Cinco tokens gobernantes (color de acento, radio de borde, escala espacial, sombra y tipografía) modifican en tiempo real la personalidad del componente.
+  </figcaption>
+</figure>
+
+<script>
+  function setupSpecimenControls() {
+    const sp = document.getElementById('spec');
+    if (!sp) return;
+
+    // Track active values
+    const currentTokens: Record<string, string> = {
+      '--t-accent': '#c2114f',
+      '--t-radius': '8px',
+      '--t-space': '16px',
+      '--t-shadow': '0 4px 12px rgba(20,32,28,0.08)',
+      '--t-font': 'var(--sans)'
+    };
+
+    document.querySelectorAll('.opts').forEach((g) => {
+      g.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        const b = target ? target.closest('button') : null;
+        if (!b) return;
+
+        const group = g as HTMLElement;
+        group.querySelectorAll('button').forEach((x) => {
+          x.setAttribute('aria-pressed', String(x === b));
+        });
+
+        const key = group.dataset.k;
+        const val = b.dataset.v;
+        if (key && val) {
+          sp.style.setProperty(key, val);
+          currentTokens[key] = val;
+        }
+      });
+    });
+
+    // Copy tokens button handler
+    const copyBtn = document.getElementById('copy-spec-tokens');
+    const label = document.getElementById('copy-spec-label');
+    if (copyBtn && label) {
+      copyBtn.addEventListener('click', async () => {
+        const text = `:root {\n  --t-accent: ${currentTokens['--t-accent']};\n  --t-radius: ${currentTokens['--t-radius']};\n  --t-space: ${currentTokens['--t-space']};\n  --t-shadow: ${currentTokens['--t-shadow']};\n  --t-font: ${currentTokens['--t-font']};\n}`;
+        try {
+          await navigator.clipboard.writeText(text);
+          const orig = label.textContent;
+          label.textContent = "¡Copiado!";
+          setTimeout(() => {
+            label.textContent = orig;
+          }, 2000);
+        } catch (_) {}
+      });
+    }
+  }
+
+  setupSpecimenControls();
+  document.addEventListener('astro:page-load', setupSpecimenControls);
+</script>

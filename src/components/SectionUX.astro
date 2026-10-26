@@ -1,0 +1,145 @@
+---
+const uxLaws = [
+  {
+    name: "Ley de Hick",
+    rule: "El tiempo que toma tomar una decisión se incrementa logarítmicamente con el número y la complejidad de las alternativas.",
+    impact: "Reducir opciones en navegación primaria; usar divulgación progresiva.",
+    svgPath: "M4 6h16M4 12h10M4 18h6"
+  },
+  {
+    name: "Ley de Fitts",
+    rule: "El tiempo requerido para moverse rápidamente a una zona objetivo es función del tamaño y la distancia al objetivo.",
+    impact: "Áreas táctiles mínimas de 44×44px / 48×48px; ubicar acciones críticas en zonas de fácil alcance.",
+    svgPath: "M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"
+  },
+  {
+    name: "Ley de Miller",
+    rule: "La persona promedio solo puede retener entre 5 y 9 piezas de información en su memoria de trabajo activa (7 ± 2).",
+    impact: "Agrupación (chunking) en números de teléfono, tarjetas de crédito y formularios.",
+    svgPath: "M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 0h7v7h-7z"
+  },
+  {
+    name: "Ley de Jakob",
+    rule: "Las personas pasan la mayor parte de su tiempo en otros sitios. Prefieren que tu sitio funcione del mismo modo que todos los demás.",
+    impact: "No reinventar convenciones como el carrito de compras, la lupa de búsqueda o el scroll.",
+    svgPath: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"
+  }
+];
+
+const principles = [
+  { title: "Consistencia", desc: "Las mismas etiquetas, iconos y comportamientos de navegación en todo el producto." },
+  { title: "Pistas contextuales", desc: "La persona sabe dónde está (migas de pan), de dónde viene y a qué opciones puede saltar." },
+  { title: "Revelación progresiva", desc: "Se muestra solo lo inmediatamente necesario, revelando detalles complejos bajo demanda." },
+  { title: "Priorización visual", desc: "Lo más importante va primero, con mayor peso tipográfico y contraste deliberado." },
+];
+
+const processSteps = [
+  { title: "Objetivos de negocio", desc: "Qué métricas y tareas debe resolver la interfaz." },
+  { title: "Investigación", desc: "Modelos mentales de usuarios y puntos de fricción." },
+  { title: "Card sorting", desc: "Clasificación de contenidos abierta y cerrada para etiquetar." },
+  { title: "Arquitectura y Wireflows", desc: "Árboles de navegación, taxonomías y flujos." },
+  { title: "Pruebas de usabilidad", desc: "Tree testing y prototipos de baja fidelidad." },
+];
+---
+
+<section class="ch" id="ux">
+  <div class="side">
+    <h2>Arquitectura de información y UX</h2>
+    <p>La estructura invisible que permite orientarse y encontrar lo que se busca sin fricción.</p>
+  </div>
+  <div class="body">
+    <p>
+      La arquitectura de diseño no se entiende sin la arquitectura de información. De ella dependen la experiencia, la facilidad para encontrar contenido y, al final, la conversión y retención del usuario.
+    </p>
+
+    <h3 id="ux-leyes">Leyes cognitivas aplicadas a la interfaz</h3>
+    <p>Principios psicológicos indispensables para justificar cualquier decisión de layout y carga cognitiva:</p>
+
+    <div class="laws-grid">
+      {uxLaws.map((law) => (
+        <div class="law-card">
+          <div class="law-header">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d={law.svgPath} stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <b>{law.name}</b>
+          </div>
+          <span>{law.rule}</span>
+          <div class="law-meta">Impacto: {law.impact}</div>
+        </div>
+      ))}
+    </div>
+
+    <h3>Anatomía de navegación y modelos de pantalla</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Patrón de navegación</th>
+            <th>Cuándo utilizarlo</th>
+            <th>Riesgo a evitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Header plano (Top Bar)</td>
+            <td>Sitios con menos de 6 secciones principales y landing pages.</td>
+            <td>Saturar con demasiados elementos o romper en resoluciones móviles.</td>
+          </tr>
+          <tr>
+            <td>Sidebar persistente</td>
+            <td>Dashboards, herramientas SaaS complejas y editores de contenido.</td>
+            <td>Consumir demasiado espacio horizontal en pantallas reducidas.</td>
+          </tr>
+          <tr>
+            <td>Bottom Navigation Bar</td>
+            <td>Aplicaciones web móviles prioritarias (alcance del pulgar).</td>
+            <td>Superar 4 o 5 destinos principales o mezclar con modales.</td>
+          </tr>
+          <tr>
+            <td>Command Palette (Ctrl + K)</td>
+            <td>Herramientas de productividad y usuarios intensivos con atajos.</td>
+            <td>Ocultar funciones indispensables sin dar alternativa visible.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Estados de pantalla: Vacío, Carga y Error</h3>
+    <p>Una arquitectura sólida prevé el comportamiento de la interfaz cuando los datos no están disponibles:</p>
+    <ul class="prin">
+      <li>
+        <b>Empty States (Estados vacíos con propósito)</b>
+        <span>No dejes pantallas en blanco: orienta al usuario con una ilustración conceptual, una explicación clara y una llamada a la acción (ej. <i>"Aún no tienes proyectos creados. Crear mi primer proyecto"</i>).</span>
+      </li>
+      <li>
+        <b>Skeleton Screens (Esqueletos de carga)</b>
+        <span>Reduce la percepción de tiempo de espera sustituyendo spinners genéricos por bloques que anticipan la estructura del contenido que llegará.</span>
+      </li>
+      <li>
+        <b>Prevención y recuperación de errores</b>
+        <span>Validación en tiempo real con <code>:user-valid</code> / <code>:user-invalid</code>, confirmaciones en acciones destructivas y mensajes orientados a la solución.</span>
+      </li>
+    </ul>
+
+    <h3>Principios de diseño de información</h3>
+    <ul class="prin">
+      {principles.map((item) => (
+        <li>
+          <b>{item.title}</b>
+          <span>{item.desc}</span>
+        </li>
+      ))}
+    </ul>
+
+    <h3>Proceso práctico de diseño</h3>
+    <ol class="seq" style="margin-top:0">
+      {processSteps.map((step) => (
+        <li>
+          <b>{step.title}</b>
+          <span>{step.desc}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
