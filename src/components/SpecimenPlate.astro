@@ -1,8 +1,8 @@
 ---
-// Interactive design token specimen playground 2.0
+// Interactive design token specimen playground 2.0 with multi-format export
 ---
 
-<figure>
+<figure class="reveal-on-scroll">
   <div class="plate">
     <div class="spec" id="spec">
       <h4>Boletín del atlas</h4>
@@ -94,14 +94,20 @@
         </div>
       </fieldset>
 
-      <!-- Botón Copiar Tokens CSS con SVG -->
+      <!-- Pestañas de Formato de Exportación -->
       <div class="spec-copy-row">
+        <div class="export-tabs" role="tablist" aria-label="Formato de exportación">
+          <button type="button" class="export-tab-btn" data-fmt="css" aria-selected="true">CSS</button>
+          <button type="button" class="export-tab-btn" data-fmt="tailwind" aria-selected="false">Tailwind v4</button>
+          <button type="button" class="export-tab-btn" data-fmt="json" aria-selected="false">W3C JSON</button>
+        </div>
+
         <button type="button" id="copy-spec-tokens" class="copy-tokens-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
-          <span id="copy-spec-label">Copiar tokens CSS</span>
+          <span id="copy-spec-label">Copiar en CSS</span>
         </button>
       </div>
     </div>
@@ -126,6 +132,8 @@
       '--t-font': 'var(--sans)'
     };
 
+    let activeFormat = 'css';
+
     document.querySelectorAll('.opts').forEach((g) => {
       g.addEventListener('click', (e) => {
         const target = e.target as HTMLElement | null;
@@ -146,18 +154,49 @@
       });
     });
 
+    // Format selection handler
+    const formatBtns = document.querySelectorAll('.export-tab-btn');
+    const copyLabel = document.getElementById('copy-spec-label');
+
+    formatBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        formatBtns.forEach((b) => b.setAttribute('aria-selected', 'false'));
+        btn.setAttribute('aria-selected', 'true');
+        activeFormat = (btn as HTMLElement).dataset.fmt || 'css';
+        if (copyLabel) {
+          if (activeFormat === 'css') copyLabel.textContent = 'Copiar en CSS';
+          if (activeFormat === 'tailwind') copyLabel.textContent = 'Copiar en Tailwind v4';
+          if (activeFormat === 'json') copyLabel.textContent = 'Copiar en W3C JSON';
+        }
+      });
+    });
+
     // Copy tokens button handler
     const copyBtn = document.getElementById('copy-spec-tokens');
-    const label = document.getElementById('copy-spec-label');
-    if (copyBtn && label) {
+    if (copyBtn && copyLabel) {
       copyBtn.addEventListener('click', async () => {
-        const text = `:root {\n  --t-accent: ${currentTokens['--t-accent']};\n  --t-radius: ${currentTokens['--t-radius']};\n  --t-space: ${currentTokens['--t-space']};\n  --t-shadow: ${currentTokens['--t-shadow']};\n  --t-font: ${currentTokens['--t-font']};\n}`;
+        let text = '';
+        if (activeFormat === 'css') {
+          text = `:root {\n  --t-accent: ${currentTokens['--t-accent']};\n  --t-radius: ${currentTokens['--t-radius']};\n  --t-space: ${currentTokens['--t-space']};\n  --t-shadow: ${currentTokens['--t-shadow']};\n  --t-font: ${currentTokens['--t-font']};\n}`;
+        } else if (activeFormat === 'tailwind') {
+          text = `@theme {\n  --color-accent: ${currentTokens['--t-accent']};\n  --radius-custom: ${currentTokens['--t-radius']};\n  --spacing-base: ${currentTokens['--t-space']};\n  --shadow-card: ${currentTokens['--t-shadow']};\n}`;
+        } else if (activeFormat === 'json') {
+          text = JSON.stringify({
+            token: {
+              accent: { "$value": currentTokens['--t-accent'], "$type": "color" },
+              radius: { "$value": currentTokens['--t-radius'], "$type": "dimension" },
+              spacing: { "$value": currentTokens['--t-space'], "$type": "dimension" },
+              shadow: { "$value": currentTokens['--t-shadow'], "$type": "shadow" }
+            }
+          }, null, 2);
+        }
+
         try {
           await navigator.clipboard.writeText(text);
-          const orig = label.textContent;
-          label.textContent = "¡Copiado!";
+          const orig = copyLabel.textContent;
+          copyLabel.textContent = "¡Tokens copiados!";
           setTimeout(() => {
-            label.textContent = orig;
+            copyLabel.textContent = orig;
           }, 2000);
         } catch (_) {}
       });

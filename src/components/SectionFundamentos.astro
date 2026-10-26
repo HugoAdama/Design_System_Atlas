@@ -1,5 +1,7 @@
 ---
 import SpecimenPlate from './SpecimenPlate.astro';
+import BeforeAfterSlider from './BeforeAfterSlider.astro';
+import DoDontCompare from './DoDontCompare.astro';
 ---
 
 <section class="ch" id="fundamentos">
@@ -8,18 +10,26 @@ import SpecimenPlate from './SpecimenPlate.astro';
     <p>La estructura viva que mantiene coherentes a todos los productos digitales de una organización.</p>
   </div>
   <div class="body">
-    <p>
+    <p class="reveal-on-scroll">
       Una guía de estilo dice cómo se ve una marca. Una biblioteca de componentes entrega las piezas en código. Un sistema de diseño reúne ambas cosas y añade tokens, patrones, documentación y reglas para contribuir. Invertir en esa documentación se paga solo: menos decisiones repetidas, menos inconsistencias y entregas más rápidas.
     </p>
-    <blockquote>Un sistema de diseño no es un documento: es una arquitectura.</blockquote>
+    <blockquote class="reveal-on-scroll">Un sistema de diseño no es un documento: es una arquitectura.</blockquote>
 
+    <!-- Comparador Antes vs Después -->
+    <h3 class="reveal-on-scroll">El impacto de un sistema en la pantalla</h3>
+    <p class="reveal-on-scroll">
+      Arrastra el separador para comparar el caos de una interfaz construida con valores ad-hoc frente a la armonía estructural que proporciona una malla de tokens:
+    </p>
+    <BeforeAfterSlider />
+
+    <h3 class="reveal-on-scroll">Playground de Design Tokens</h3>
     <SpecimenPlate />
 
-    <h3>Taxonomía de Design Tokens (Estándar W3C / DTCG)</h3>
-    <p>
+    <h3 class="reveal-on-scroll">Taxonomía de Design Tokens (Estándar W3C / DTCG)</h3>
+    <p class="reveal-on-scroll">
       La especificación del <i>Design Tokens Community Group (W3C)</i> define cómo formalizar las decisiones de diseño para que se traduzcan de manera agnóstica a CSS, iOS, Android y Flutter. Se organizan en tres niveles jerárquicos:
     </p>
-    <dl>
+    <dl class="reveal-on-scroll">
       <dt>1. Tokens Globales (Choices)</dt>
       <dd>Los valores primitivos sin contexto de uso: escalas cromáticas, tamaños de fuente y radios (ej. <code>color.blue.600: #1d4ed8</code>).</dd>
       <dt>2. Tokens Semánticos (Decisions)</dt>
@@ -28,7 +38,7 @@ import SpecimenPlate from './SpecimenPlate.astro';
       <dd>La vinculación directa con el elemento final: <code>button.primary.background: {"{"}color.action.primary{"}"}</code>.</dd>
     </dl>
 
-    <div class="code-wrapper">
+    <div class="code-wrapper reveal-on-scroll">
       <div class="code-badge">
         <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
@@ -55,13 +65,20 @@ import SpecimenPlate from './SpecimenPlate.astro';
 }`}</code></pre>
     </div>
 
+    <!-- Módulo Do vs Don't -->
+    <h3 class="reveal-on-scroll">Buenas y Malas Prácticas (Do's &amp; Don'ts)</h3>
+    <p class="reveal-on-scroll">
+      Errores arquitectónicos recurrentes y cómo prevenirlos mediante reglas estrictas de sistema:
+    </p>
+    <DoDontCompare />
+
     <!-- Matriz de Estados de Componentes -->
-    <h3 id="estados">Matriz de estados indispensables</h3>
-    <p>
+    <h3 id="estados" class="reveal-on-scroll">Matriz de estados indispensables</h3>
+    <p class="reveal-on-scroll">
       Todo componente interactivo debe diseñar y codificar sus 6 estados fundamentales para garantizar previsibilidad y accesibilidad cognitiva:
     </p>
 
-    <div class="states-grid">
+    <div class="states-grid reveal-on-scroll">
       <div class="state-card">
         <span class="state-label">Default</span>
         <button type="button" class="state-preview-btn btn-state-default">Acción</button>
@@ -92,7 +109,7 @@ import SpecimenPlate from './SpecimenPlate.astro';
     </div>
 
     <!-- Accesibilidad y Contraste -->
-    <div class="callout-box" id="accesibilidad">
+    <div class="callout-box reveal-on-scroll" id="accesibilidad">
       <h4>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -118,9 +135,9 @@ import SpecimenPlate from './SpecimenPlate.astro';
       </div>
     </div>
 
-    <h3>Atomic Design</h3>
-    <p class="note">El método de Brad Frost: cada nivel se arma con el anterior.</p>
-    <div class="atoms">
+    <h3 class="reveal-on-scroll">Atomic Design</h3>
+    <p class="note reveal-on-scroll">El método de Brad Frost: cada nivel se arma con el anterior.</p>
+    <div class="atoms reveal-on-scroll">
       <div>Átomos</div>
       <div>Moléculas</div>
       <div>Organismos</div>
@@ -128,9 +145,9 @@ import SpecimenPlate from './SpecimenPlate.astro';
       <div>Páginas</div>
     </div>
 
-    <h3>Gobernanza y DesignOps</h3>
-    <p>Quién puede cambiar el sistema define cuánto dura.</p>
-    <div class="gov">
+    <h3 class="reveal-on-scroll">Gobernanza y DesignOps</h3>
+    <p class="reveal-on-scroll">Quién puede cambiar el sistema define cuánto dura.</p>
+    <div class="gov reveal-on-scroll">
       <figure>
         <svg viewBox="0 0 210 130" role="img" aria-label="Un equipo central conectado con cuatro equipos">
           <g>
@@ -167,11 +184,11 @@ import SpecimenPlate from './SpecimenPlate.astro';
       </figure>
     </div>
 
-    <ol class="seq">
+    <ol class="seq reveal-on-scroll">
       <li><b>Propuesta</b><span>Alguien detecta una necesidad.</span></li>
       <li><b>Revisión</b><span>Se evalúa contra el sistema.</span></li>
       <li><b>Integración</b><span>Se documenta y se publica.</span></li>
     </ol>
-    <p class="note" style="margin-top:20px">DesignOps sostiene este ciclo con herramientas, calendario y comunicación para que el sistema siga vivo.</p>
+    <p class="note reveal-on-scroll" style="margin-top:20px">DesignOps sostiene este ciclo con herramientas, calendario y comunicación para que el sistema siga vivo.</p>
   </div>
 </section>

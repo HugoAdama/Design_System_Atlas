@@ -1,0 +1,116 @@
+---
+// Interactive Modular Type Scale Calculator
+---
+
+<div class="typescale-box reveal-on-scroll">
+  <div class="typescale-controls">
+    <div class="typescale-control-item">
+      <label for="typescale-ratio-select">Ratio de Proporción Modular</label>
+      <select id="typescale-ratio-select" class="typescale-select">
+        <option value="1.200">1.200 &bull; Tercera Menor (Editorial Compacto)</option>
+        <option value="1.250" selected>1.250 &bull; Tercera Mayor (Estándar Web)</option>
+        <option value="1.333">1.333 &bull; Cuarta Perfecta (Contraste Marcado)</option>
+        <option value="1.618">1.618 &bull; Proporción Áurea (Dramático)</option>
+      </select>
+    </div>
+
+    <div class="typescale-control-item">
+      <label for="typescale-base-select">Tamaño Base (1rem)</label>
+      <select id="typescale-base-select" class="typescale-select">
+        <option value="16" selected>16px &bull; Estándar (1rem = 16px)</option>
+        <option value="18">18px &bull; Lectura Confortable (1rem = 18px)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="typescale-preview-list" id="typescale-list">
+    <!-- Populated dynamically via JS -->
+  </div>
+
+  <div class="spec-copy-row" style="margin-top: 24px;">
+    <button type="button" id="copy-typescale-btn" class="copy-tokens-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span id="copy-typescale-label">Copiar escala en tokens CSS</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  function setupTypeScaleCalculator() {
+    const ratioSelect = document.getElementById('typescale-ratio-select') as HTMLSelectElement | null;
+    const baseSelect = document.getElementById('typescale-base-select') as HTMLSelectElement | null;
+    const listContainer = document.getElementById('typescale-list');
+    const copyBtn = document.getElementById('copy-typescale-btn');
+    const copyLabel = document.getElementById('copy-typescale-label');
+
+    if (!ratioSelect || !baseSelect || !listContainer) return;
+
+    const steps = [
+      { name: "--text-4xl", power: 4, sample: "Arquitectura Invisible" },
+      { name: "--text-3xl", power: 3, sample: "Sistemas Coherentes" },
+      { name: "--text-2xl", power: 2, sample: "Jerarquía Tipográfica" },
+      { name: "--text-xl",  power: 1, sample: "Decisiones Estructuradas" },
+      { name: "--text-base",power: 0, sample: "Cuerpo de lectura base para párrafos extensos." },
+      { name: "--text-sm",  power: -1, sample: "Metadatos, pies de figura y etiquetas de control." },
+      { name: "--text-xs",  power: -2, sample: "Badges compactos, notas legales y código." }
+    ];
+
+    let currentCSS = '';
+
+    function recalculate() {
+      const ratio = parseFloat(ratioSelect?.value || '1.25');
+      const basePx = parseFloat(baseSelect?.value || '16');
+
+      let html = '';
+      let cssBlock = ':root {\n';
+
+      steps.forEach((step) => {
+        const pxVal = basePx * Math.pow(ratio, step.power);
+        const remVal = (pxVal / basePx).toFixed(3);
+        const pxRounded = pxVal.toFixed(1);
+
+        cssBlock += `  ${step.name}: ${remVal}rem; /* ${pxRounded}px */\n`;
+
+        html += `
+          <div class="typescale-row">
+            <div class="typescale-meta">
+              <span>${step.name}</span><br>
+              <small style="color:var(--muted)">${remVal}rem &bull; ${pxRounded}px</small>
+            </div>
+            <p class="typescale-text" style="font-size: ${remVal}rem;">
+              ${step.sample}
+            </p>
+          </div>
+        `;
+      });
+
+      cssBlock += '}';
+      currentCSS = cssBlock;
+      listContainer.innerHTML = html;
+    }
+
+    ratioSelect.addEventListener('change', recalculate);
+    baseSelect.addEventListener('change', recalculate);
+
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(currentCSS);
+        if (copyLabel) {
+          const orig = copyLabel.textContent;
+          copyLabel.textContent = "¡Tokens copiados!";
+          setTimeout(() => {
+            copyLabel.textContent = orig;
+          }, 2000);
+        }
+      } catch (_) {}
+    });
+
+    recalculate();
+  }
+
+  setupTypeScaleCalculator();
+  document.addEventListener('astro:page-load', setupTypeScaleCalculator);
+</script>

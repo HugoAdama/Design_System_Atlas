@@ -1,0 +1,130 @@
+---
+// Interactive Do vs. Don't comparison module
+const cases = [
+  {
+    id: "tokens",
+    label: "Tokens de Color",
+    dont: {
+      title: "Antipatrón: Token Físico",
+      code: "/* Frágil: si la marca cambia, se rompe */\n--color-azul-boton: #1d4ed8;\n--texto-rojo-error: #dc2626;",
+      explanation: "Nombrar tokens por el color literal ('azul', 'rojo') obliga a refactorizar todo el código base ante un cambio de marca o al añadir modo oscuro."
+    },
+    do: {
+      title: "Práctica Recomendada: Token Semántico",
+      code: "/* Robusto: la intención no cambia */\n--color-action-primary: var(--blue-600);\n--color-feedback-error: var(--red-600);",
+      explanation: "Nombrar por función ('action-primary', 'feedback-error') desacopla el componente del valor final y permite cambiar de tema sin tocar el HTML."
+    }
+  },
+  {
+    id: "touch",
+    label: "Áreas Táctiles (Fitts)",
+    dont: {
+      title: "Antipatrón: Objetivo Inaccesible",
+      code: ".btn-icon {\n  width: 24px;\n  height: 24px; /* Imposible de tocar sin error */\n}",
+      explanation: "Un objetivo menor a 44px provoca fallos de pulsación ('fat-finger error') y frustración en usuarios con dificultades motoras o en pantallas móviles."
+    },
+    do: {
+      title: "Práctica Recomendada: Área Mínima 48px",
+      code: ".btn-icon {\n  width: 24px; height: 24px;\n  padding: 12px; /* Área táctil total: 48×48px */\n}",
+      explanation: "Mantén el icono visualmente compacto pero expande su área interactiva a un mínimo de 44×44px o 48×48px para cumplir con el criterio WCAG 2.5.5."
+    }
+  },
+  {
+    id: "cls",
+    label: "Estabilidad de Layout (CLS)",
+    dont: {
+      title: "Antipatrón: Imagen sin Dimensiones",
+      code: "<!-- Provoca salto brusco al cargar -->\n<img src=\"hero.jpg\" alt=\"Portada\" />",
+      explanation: "El navegador desconoce el tamaño antes de descargar los bytes de la imagen, provocando un salto brusco en la lectura (Layout Shift)."
+    },
+    do: {
+      title: "Práctica Recomendada: Espacio Reservado",
+      code: "<!-- El navegador reserva el hueco exacto -->\n<img src=\"hero.jpg\" width=\"800\" height=\"450\"\n     style=\"aspect-ratio: 16/9;\" />",
+      explanation: "Definir atributos width/height o 'aspect-ratio' garantiza que el flujo de texto no se mueva ni un solo píxel mientras la imagen carga."
+    }
+  }
+];
+---
+
+<div class="dodont-wrapper reveal-on-scroll">
+  <div class="dodont-selector" role="tablist" aria-label="Casos de buenas y malas prácticas">
+    {cases.map((c, index) => (
+      <button
+        type="button"
+        class="dodont-tab"
+        data-case={c.id}
+        aria-selected={index === 0 ? "true" : "false"}
+      >
+        <span>{c.label}</span>
+      </button>
+    ))}
+  </div>
+
+  {cases.map((c, index) => (
+    <div
+      class="dodont-case-content"
+      id={`dodont-case-${c.id}`}
+      style={index === 0 ? "display: block;" : "display: none;"}
+    >
+      <div class="dodont-grid">
+        <!-- DON'T CARD -->
+        <div class="dodont-card is-dont">
+          <div class="dodont-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>Don't (Evitar)</span>
+          </div>
+          <b>{c.dont.title}</b>
+          <div class="code-wrapper" style="margin-top:0">
+            <pre><code>{c.dont.code}</code></pre>
+          </div>
+          <p class="dodont-explanation">{c.dont.explanation}</p>
+        </div>
+
+        <!-- DO CARD -->
+        <div class="dodont-card is-do">
+          <div class="dodont-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Do (Recomendado)</span>
+          </div>
+          <b>{c.do.title}</b>
+          <div class="code-wrapper" style="margin-top:0">
+            <pre><code>{c.do.code}</code></pre>
+          </div>
+          <p class="dodont-explanation">{c.do.explanation}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  function setupDoDontTabs() {
+    const tabs = document.querySelectorAll('.dodont-tab');
+    const cases = document.querySelectorAll('.dodont-case-content');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+
+        const caseId = (tab as HTMLElement).dataset.case;
+        cases.forEach((content) => {
+          const el = content as HTMLElement;
+          if (el.id === `dodont-case-${caseId}`) {
+            el.style.display = 'block';
+          } else {
+            el.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  setupDoDontTabs();
+  document.addEventListener('astro:page-load', setupDoDontTabs);
+</script>

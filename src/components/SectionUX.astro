@@ -1,4 +1,6 @@
 ---
+import TypeScaleCalculator from './TypeScaleCalculator.astro';
+
 const uxLaws = [
   {
     name: "Ley de Hick",
@@ -48,14 +50,14 @@ const processSteps = [
     <p>La estructura invisible que permite orientarse y encontrar lo que se busca sin fricción.</p>
   </div>
   <div class="body">
-    <p>
+    <p class="reveal-on-scroll">
       La arquitectura de diseño no se entiende sin la arquitectura de información. De ella dependen la experiencia, la facilidad para encontrar contenido y, al final, la conversión y retención del usuario.
     </p>
 
-    <h3 id="ux-leyes">Leyes cognitivas aplicadas a la interfaz</h3>
-    <p>Principios psicológicos indispensables para justificar cualquier decisión de layout y carga cognitiva:</p>
+    <h3 id="ux-leyes" class="reveal-on-scroll">Leyes cognitivas aplicadas a la interfaz</h3>
+    <p class="reveal-on-scroll">Principios psicológicos indispensables para justificar cualquier decisión de layout y carga cognitiva:</p>
 
-    <div class="laws-grid">
+    <div class="laws-grid reveal-on-scroll">
       {uxLaws.map((law) => (
         <div class="law-card">
           <div class="law-header">
@@ -70,8 +72,15 @@ const processSteps = [
       ))}
     </div>
 
-    <h3>Anatomía de navegación y modelos de pantalla</h3>
-    <div class="tw">
+    <!-- Calculadora de escala modular -->
+    <h3 class="reveal-on-scroll">Herramienta: Calculadora de Escala Tipográfica Modular</h3>
+    <p class="reveal-on-scroll">
+      Una jerarquía tipográfica no debe basarse en números aleatorios. Selecciona una proporción matemática para generar tokens armónicos y previsualizarlos en vivo:
+    </p>
+    <TypeScaleCalculator />
+
+    <h3 class="reveal-on-scroll">Anatomía de navegación y modelos de pantalla</h3>
+    <div class="tw reveal-on-scroll">
       <table>
         <thead>
           <tr>
@@ -105,9 +114,9 @@ const processSteps = [
       </table>
     </div>
 
-    <h3>Estados de pantalla: Vacío, Carga y Error</h3>
-    <p>Una arquitectura sólida prevé el comportamiento de la interfaz cuando los datos no están disponibles:</p>
-    <ul class="prin">
+    <h3 class="reveal-on-scroll">Estados de pantalla: Vacío, Carga y Error</h3>
+    <p class="reveal-on-scroll">Una arquitectura sólida prevé el comportamiento de la interfaz cuando los datos no están disponibles:</p>
+    <ul class="prin reveal-on-scroll">
       <li>
         <b>Empty States (Estados vacíos con propósito)</b>
         <span>No dejes pantallas en blanco: orienta al usuario con una ilustración conceptual, una explicación clara y una llamada a la acción (ej. <i>"Aún no tienes proyectos creados. Crear mi primer proyecto"</i>).</span>
@@ -122,8 +131,8 @@ const processSteps = [
       </li>
     </ul>
 
-    <h3>Principios de diseño de información</h3>
-    <ul class="prin">
+    <h3 class="reveal-on-scroll">Principios de diseño de información</h3>
+    <ul class="prin reveal-on-scroll">
       {principles.map((item) => (
         <li>
           <b>{item.title}</b>
@@ -132,8 +141,8 @@ const processSteps = [
       ))}
     </ul>
 
-    <h3>Proceso práctico de diseño</h3>
-    <ol class="seq" style="margin-top:0">
+    <h3 class="reveal-on-scroll">Proceso práctico de diseño</h3>
+    <ol class="seq reveal-on-scroll" style="margin-top:0">
       {processSteps.map((step) => (
         <li>
           <b>{step.title}</b>
