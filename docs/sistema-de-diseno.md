@@ -87,3 +87,23 @@ El sistema combina tres familias con funciones diferenciadas:
    - Todo boton y control cuenta con estado `:focus-visible` claramente delimitado mediante contorno y halo de color `--cobalt`.
 3. Accesibilidad de Movimiento:
    - Se incluye soporte nativo para la preferencia `@media (prefers-reduced-motion: reduce)`, desactivando transiciones pesadas para personas sensibles al movimiento.
+
+---
+
+## 5. Modularizacion de Hojas de Estilo (CSS)
+
+Para optimizar el mantenimiento, la legibilidad y la depuracion de estilos, la arquitectura CSS esta dividida en modulos especializados dentro de `src/styles/`, centralizados mediante `@import` en `global.css`:
+
+1. `tokens.css`:
+   Definicion de variables primitivas y semanticas DTCG para los esquemas `:root`, `:root[data-theme="dark"]`, `:root[data-theme="light"]` y consultas de medios `prefers-color-scheme`.
+2. `base.css`:
+   Normalizacion tipografica, reglas generales para encabezados y parrafos, lienzo de fondo y textura sutil de papel.
+3. `layout.css`:
+   Cuadricula editorial asimetrica (`.ch`, `.side`, `.body`), barra de lectura y estructura contenedora.
+4. `components.css`:
+   Reglas de componentes de interfaz: cabecera (Masthead), barra de capitulos, paginacion, matrices de estados, caja de especimen interactivo, modal de busqueda, tarjetas de recursos y pie de pagina.
+5. `trends.css`:
+   Galeria visual de estilos modernos: Bento Grid de alto contraste en modos claro y oscuro, Neobrutalismo digital con sombras duras legibles, Glassmorphism y micro-interacciones.
+6. `animations.css`:
+   Aceleracion por hardware GPU con `translate3d`, transiciones de aparicion progresiva (`.reveal-on-scroll`) y bloque universal `@media (prefers-reduced-motion: reduce)`.
+

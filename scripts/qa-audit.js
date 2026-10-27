@@ -32,7 +32,7 @@ const htmlExists = fs.existsSync(htmlPath);
 recordTest('Build Artifact', htmlExists, 'dist/index.html exists');
 
 if (!htmlExists) {
-  console.error('\n❌ ERROR: dist/index.html does not exist. Run "npm run build" first.\n');
+  console.error('\nERROR: dist/index.html does not exist. Run "npm run build" first.\n');
   process.exit(1);
 }
 
@@ -126,7 +126,10 @@ recordTest(
 );
 
 // 7. CSS Performance & Variables Validation
-const css = fs.readFileSync(cssPath, 'utf8');
+const stylesDir = path.join(projectRoot, 'src', 'styles');
+const css = fs.existsSync(stylesDir)
+  ? fs.readdirSync(stylesDir).filter(f => f.endsWith('.css')).map(f => fs.readFileSync(path.join(stylesDir, f), 'utf8')).join('\n')
+  : fs.readFileSync(cssPath, 'utf8');
 const hasReducedMotion = /@media\s*\(prefers-reduced-motion:\s*reduce\)/i.test(css);
 recordTest('a11y: Prefers-Reduced-Motion', hasReducedMotion, 'prefers-reduced-motion media query is implemented');
 
@@ -144,7 +147,7 @@ console.log('\n=============================================');
 console.log('       ATLAS DE DISEÑO - QA AUDIT REPORT     ');
 console.log('=============================================\n');
 results.tests.forEach(t => {
-  const symbol = t.status === 'PASS' ? '✓ [PASS]' : (t.status === 'WARN' ? '⚠ [WARN]' : '✗ [FAIL]');
+  const symbol = t.status === 'PASS' ? '[PASS]' : (t.status === 'WARN' ? '[WARN]' : '[FAIL]');
   console.log(`${symbol} ${t.name}: ${t.message}`);
 });
 console.log('\n---------------------------------------------');

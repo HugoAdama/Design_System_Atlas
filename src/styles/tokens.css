@@ -1,0 +1,147 @@
+/**
+ * Design System Tokens (W3C DTCG Standard)
+ * Swiss Minimalist Palette - Light & Dark Modes
+ */
+
+:root {
+  /* Surfaces & Backgrounds */
+  --paper: #fbfbfa;
+  --paper-2: #eff2f6;
+  --paper-card: #ffffff;
+  --forest: #0a1120;
+  --forest-light: #162036;
+
+  /* Typography & Ink */
+  --ink: #090d16;
+  --muted: #4b5568;
+  --on-forest: #f8fafc;
+
+  /* Cobalt Primary Accent */
+  --rose: #0047ff;
+  --rose-soft: #eff6ff;
+  --cobalt: #0047ff;
+  --cobalt-glow: rgba(0, 71, 255, 0.22);
+  --lilac: #e2e8f0;
+  --lilac-dark: #1d4ed8;
+
+  /* Feedback & Semantics */
+  --amber: #d97706;
+  --green-ok: #059669;
+  --green-soft: #ecfdf5;
+  --red-bad: #dc2626;
+  --red-soft: #fef2f2;
+
+  /* Borders & Shadows */
+  --border: rgba(9, 13, 22, 0.12);
+  --border-subtle: rgba(9, 13, 22, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(9, 13, 22, 0.05), 0 2px 6px -1px rgba(9, 13, 22, 0.02);
+  --card-shadow-hover: 0 14px 32px -4px rgba(0, 71, 255, 0.12), 0 4px 12px -2px rgba(9, 13, 22, 0.06);
+
+  /* Typography Families */
+  --serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, Menlo, Consolas, monospace;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark Mode Tokens */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #080b11;
+    --paper-2: #0e1422;
+    --paper-card: #131b2e;
+    --forest: #070a10;
+    --forest-light: #131b2c;
+
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --on-forest: #f8fafc;
+
+    --rose: #3b82f6;
+    --rose-soft: #172554;
+    --cobalt: #3b82f6;
+    --cobalt-glow: rgba(59, 130, 246, 0.35);
+    --lilac: #1e293b;
+    --lilac-dark: #93c5fd;
+
+    --amber: #fbbf24;
+    --green-ok: #34d399;
+    --green-soft: #064e3b;
+    --red-bad: #f87171;
+    --red-soft: #450a0a;
+
+    --border: rgba(255, 255, 255, 0.14);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.35);
+    --card-shadow-hover: 0 12px 36px -4px rgba(59, 130, 246, 0.24), 0 0 0 1px rgba(59, 130, 246, 0.45);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #080b11;
+  --paper-2: #0e1422;
+  --paper-card: #131b2e;
+  --forest: #070a10;
+  --forest-light: #131b2c;
+
+  --ink: #f8fafc;
+  --muted: #94a3b8;
+  --on-forest: #f8fafc;
+
+  --rose: #3b82f6;
+  --rose-soft: #172554;
+  --cobalt: #3b82f6;
+  --cobalt-glow: rgba(59, 130, 246, 0.35);
+  --lilac: #1e293b;
+  --lilac-dark: #93c5fd;
+
+  --amber: #fbbf24;
+  --green-ok: #34d399;
+  --green-soft: #064e3b;
+  --red-bad: #f87171;
+  --red-soft: #450a0a;
+
+  --border: rgba(255, 255, 255, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.35);
+  --card-shadow-hover: 0 12px 36px -4px rgba(59, 130, 246, 0.24), 0 0 0 1px rgba(59, 130, 246, 0.45);
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --paper: #fbfbfa;
+  --paper-2: #eff2f6;
+  --paper-card: #ffffff;
+  --forest: #0a1120;
+  --forest-light: #162036;
+
+  --ink: #090d16;
+  --muted: #4b5568;
+  --on-forest: #f8fafc;
+
+  --rose: #0047ff;
+  --rose-soft: #eff6ff;
+  --cobalt: #0047ff;
+  --cobalt-glow: rgba(0, 71, 255, 0.22);
+  --lilac: #e2e8f0;
+  --lilac-dark: #1d4ed8;
+
+  --amber: #d97706;
+  --green-ok: #059669;
+  --green-soft: #ecfdf5;
+  --red-bad: #dc2626;
+  --red-soft: #fef2f2;
+
+  --border: rgba(9, 13, 22, 0.12);
+  --border-subtle: rgba(9, 13, 22, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(9, 13, 22, 0.05), 0 2px 6px -1px rgba(9, 13, 22, 0.02);
+  --card-shadow-hover: 0 14px 32px -4px rgba(0, 71, 255, 0.12), 0 4px 12px -2px rgba(9, 13, 22, 0.06);
+
+  color-scheme: light;
+}

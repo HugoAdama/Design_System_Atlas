@@ -36,8 +36,14 @@ E:\Atlas_Design\
     ├── i18n/                   # Capa 3: Sistema de Internacionalización
     │   ├── translations.ts     # Diccionario bilingüe (ES/EN) con tipos estrictos
     │   └── client.ts           # Runtime de reactividad instantánea en cliente
-    ├── styles/                 # Capa 4: Arquitectura de Estilos y Tokens
-    │   └── global.css          # Paleta Suiza, tokens DTCG, dark/light, micro-animaciones
+    ├── styles/                 # Capa 4: Arquitectura de Estilos y Tokens Modular
+    │   ├── tokens.css          # Paleta Suiza, tokens DTCG semánticos y primitivos, dark/light
+    │   ├── base.css            # Tipografía, resets de elementos HTML y textura sutil de papel
+    │   ├── layout.css          # Cuadrícula maestra .ch, .side, .body, .cover y lectura
+    │   ├── components.css      # Componentes UI (Masthead, Specimen, Matrices, Diálogos, Footer)
+    │   ├── trends.css          # Galería de tendencias (Bento Grid, Neobrutalismo, Glassmorphism)
+    │   ├── animations.css      # Animaciones GPU, keyframes y soporte prefers-reduced-motion
+    │   └── global.css          # Agregador maestro mediante @import modular
     ├── components/             # Capa 5: Biblioteca de Componentes UI
     │   ├── [Layouts/Estructurales]
     │   │   ├── Masthead.astro          # Header con controles de tema, idioma y búsqueda

@@ -79,12 +79,17 @@ Esta guia ofrece procedimientos paso a paso para extender, modificar y validar l
 
 ---
 
-## 3. Procedimiento para Ajustar Tokens de Estilo
+## 3. Procedimiento para Ajustar Tokens de Estilo y Hojas Modulares
 
-1. Abra `src/styles/global.css`.
-2. Para alterar el aspecto general en modo claro, modifique las variables del bloque `:root`.
+1. Para tokens globales y semanticos, abra `src/styles/tokens.css`.
+2. Para alterar el aspecto general en modo claro, modifique las variables del bloque `:root` o `:root[data-theme="light"]`.
 3. Para ajustar el aspecto en modo oscuro, modifique las variables correspondientes bajo `:root[data-theme="dark"]` y `@media (prefers-color-scheme: dark)`.
 4. Emplee siempre variables semanticas (`var(--paper)`, `var(--ink)`, `var(--border)`, `var(--cobalt)`) en lugar de colores fijos codificados directamente en selectores.
+5. Para estilos especificos, edite el archivo modular adecuado:
+   - `src/styles/components.css` para componentes de interfaz.
+   - `src/styles/trends.css` para tarjetas y efectos visuales de la galeria.
+   - `src/styles/layout.css` para la cuadricula y disposicion de paginas.
+   - `src/styles/animations.css` para keyframes y reglas de movimiento.
 
 ---
 
