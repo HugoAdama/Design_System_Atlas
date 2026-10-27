@@ -1,41 +1,177 @@
 ---
 import ChapterPagination from './ChapterPagination.astro';
-const resources = [
+
+interface ResourceItem {
+  cat: 'specs' | 'tools' | 'ux' | 'blogs';
+  catLabel: string;
+  name: string;
+  desc: string;
+  tag: string;
+  url: string;
+}
+
+const resources: ResourceItem[] = [
   // Especificaciones
-  { cat: "specs", name: "W3C Design Tokens Community Group", tag: "especificación oficial", url: "https://design-tokens.github.io/community-group/format/" },
-  { cat: "specs", name: "WAI-ARIA Authoring Practices Guide (APG)", tag: "patrones accesibles W3C", url: "https://www.w3.org/WAI/ARIA/apg/" },
-  { cat: "specs", name: "Open Props", tag: "tokens CSS estándar", url: "https://open-props.style/" },
+  {
+    cat: "specs",
+    catLabel: "Especificacion",
+    name: "W3C Design Tokens Community Group",
+    desc: "Especificacion tecnica oficial para el formato de intercambio e interoperabilidad de tokens (DTCG).",
+    tag: "W3C DTCG Format",
+    url: "https://design-tokens.github.io/community-group/format/"
+  },
+  {
+    cat: "specs",
+    catLabel: "Especificacion",
+    name: "WAI-ARIA Authoring Practices Guide (APG)",
+    desc: "Patrones de diseno accesibles, roles semanticos y comportamientos de teclado recomendados por el W3C.",
+    tag: "Accesibilidad W3C",
+    url: "https://www.w3.org/WAI/ARIA/apg/"
+  },
+  {
+    cat: "specs",
+    catLabel: "Especificacion",
+    name: "Open Props",
+    desc: "Super-conjunto de tokens y variables CSS estandar aceleradas por GPU, listas para produccion.",
+    tag: "Tokens CSS",
+    url: "https://open-props.style/"
+  },
   
   // Herramientas
-  { cat: "tools", name: "zeroheight", tag: "documentar sistemas", url: "https://zeroheight.com" },
-  { cat: "tools", name: "Storybook", tag: "taller de componentes aislados", url: "https://storybook.js.org" },
-  { cat: "tools", name: "Subframe", tag: "del diseño visual al código", url: "https://www.subframe.com" },
-  { cat: "tools", name: "Lucide Icons", tag: "iconografía SVG coherente", url: "https://lucide.dev" },
-  { cat: "tools", name: "Tailwind CSS", tag: "framework con tokens", url: "https://tailwindcss.com" },
-  { cat: "tools", name: "Radix UI Primitives", tag: "componentes accesibles sin estilos", url: "https://www.radix-ui.com" },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "zeroheight",
+    desc: "Plataforma centralizada para sincronizar y documentar sistemas de diseno conectados con Figma y codigo.",
+    tag: "Documentacion",
+    url: "https://zeroheight.com"
+  },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "Storybook",
+    desc: "Taller interactivo para construir, aislar y testear componentes UI fuera de la logica de negocio.",
+    tag: "Taller UI",
+    url: "https://storybook.js.org"
+  },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "Subframe",
+    desc: "IDE visual para disenar interfaces modernas de alta fidelidad que genera codigo limpio en Tailwind.",
+    tag: "Diseno a Codigo",
+    url: "https://www.subframe.com"
+  },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "Lucide Icons",
+    desc: "Libreria de iconos SVG limpios, consistentes y modulares con mas de 1.400 glifos configurables.",
+    tag: "Iconografia SVG",
+    url: "https://lucide.dev"
+  },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "Tailwind CSS",
+    desc: "Framework CSS de utilidades atomicas con soporte de tokens de diseno y optimizacion de compilacion.",
+    tag: "CSS Framework",
+    url: "https://tailwindcss.com"
+  },
+  {
+    cat: "tools",
+    catLabel: "Herramienta",
+    name: "Radix UI Primitives",
+    desc: "Componentes headless sin estilos con maxima accesibilidad WAI-ARIA y control total de estilos.",
+    tag: "Headless UI",
+    url: "https://www.radix-ui.com"
+  },
 
   // UX & Arquitectura
-  { cat: "ux", name: "Laws of UX (Jon Yablonski)", tag: "principios cognitivos", url: "https://lawsofux.com" },
-  { cat: "ux", name: "Optimal Workshop", tag: "card sorting y tree testing", url: "https://www.optimalworkshop.com" },
-  { cat: "ux", name: "Maze User Testing", tag: "pruebas remotas", url: "https://maze.co" },
-  { cat: "ux", name: "Nielsen Norman Group", tag: "estudios de usabilidad", url: "https://www.nngroup.com" },
+  {
+    cat: "ux",
+    catLabel: "UX & Usabilidad",
+    name: "Laws of UX (Jon Yablonski)",
+    desc: "Compilacion de leyes y principios de psicologia cognitiva fundamentales aplicados a la interaccion digital.",
+    tag: "Principios Cognitivos",
+    url: "https://lawsofux.com"
+  },
+  {
+    cat: "ux",
+    catLabel: "UX & Usabilidad",
+    name: "Optimal Workshop",
+    desc: "Herramientas de investigacion y testeo de arquitectura de informacion mediante card sorting y tree testing.",
+    tag: "Arquitectura Info",
+    url: "https://www.optimalworkshop.com"
+  },
+  {
+    cat: "ux",
+    catLabel: "UX & Usabilidad",
+    name: "Maze User Testing",
+    desc: "Plataforma de pruebas continuas con prototipos dinamicos para recopilar metricas cuantitativas de usuario.",
+    tag: "User Testing",
+    url: "https://maze.co"
+  },
+  {
+    cat: "ux",
+    catLabel: "UX & Usabilidad",
+    name: "Nielsen Norman Group",
+    desc: "Lider mundial en investigacion empirica de usabilidad, heuristicas de diseno y experiencia de usuario.",
+    tag: "Investigacion UX",
+    url: "https://www.nngroup.com"
+  },
 
   // Blogs y Referencias
-  { cat: "blogs", name: "Smashing Magazine", tag: "artículos de arquitectura web", url: "https://www.smashingmagazine.com" },
-  { cat: "blogs", name: "CSS-Tricks", tag: "almanaque de selectores", url: "https://css-tricks.com" },
-  { cat: "blogs", name: "Codrops", tag: "laboratorio de interacción", url: "https://tympanus.net/codrops" },
-  { cat: "blogs", name: "A List Apart", tag: "diseño web editorial", url: "https://alistapart.com" },
-  { cat: "blogs", name: "Figma Design Systems Blog", tag: "casos de estudio", url: "https://www.figma.com/blog" }
+  {
+    cat: "blogs",
+    catLabel: "Publicacion",
+    name: "Smashing Magazine",
+    desc: "Articulos editoriales de profundidad sobre arquitectura frontend, accesibilidad y rendimiento web.",
+    tag: "Arquitectura Web",
+    url: "https://www.smashingmagazine.com"
+  },
+  {
+    cat: "blogs",
+    catLabel: "Publicacion",
+    name: "CSS-Tricks",
+    desc: "Almanaque canonico de tecnicas de maquetacion, selectores modernos, flexbox, CSS Grid y animaciones.",
+    tag: "Almanaque CSS",
+    url: "https://css-tricks.com"
+  },
+  {
+    cat: "blogs",
+    catLabel: "Publicacion",
+    name: "Codrops",
+    desc: "Laboratorio y escaparate experimental de interaccion UI, transiciones visuales, shaders y Canvas.",
+    tag: "Interaccion Web",
+    url: "https://tympanus.net/codrops"
+  },
+  {
+    cat: "blogs",
+    catLabel: "Publicacion",
+    name: "A List Apart",
+    desc: "Publicacion pionera sobre diseno centrado en estandares web abiertos, tipografia editorial y contenido.",
+    tag: "Diseno Editorial",
+    url: "https://alistapart.com"
+  },
+  {
+    cat: "blogs",
+    catLabel: "Publicacion",
+    name: "Figma Design Systems Blog",
+    desc: "Casos practicos, arquitectura de variables y metodologias de gestion de sistemas a escala empresarial.",
+    tag: "Casos de Estudio",
+    url: "https://www.figma.com/blog"
+  }
 ];
 ---
 
 <section class="ch" id="recursos">
   <div class="side reveal-on-scroll">
     <h2 data-i18n="recursos.title">Recursos, blogs y herramientas</h2>
-    <p data-i18n="recursos.subtitle">La sección a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
+    <p data-i18n="recursos.subtitle">La seccion a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
   </div>
-  <div class="body idx">
-    <div class="resource-tabs reveal-on-scroll" role="tablist">
+  <div class="body">
+    <div class="resource-tabs reveal-on-scroll" role="tablist" aria-label="Filtrar por categoria">
       <button type="button" class="resource-tab-btn" data-cat="all" aria-selected="true">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="10"></circle>
@@ -75,19 +211,28 @@ const resources = [
       </button>
     </div>
 
-    <ul id="resource-list" class="reveal-on-scroll">
+    <ul id="resource-list" class="resources-grid reveal-on-scroll">
       {resources.map((item) => (
         <li class="resource-item" data-category={item.cat}>
-          <a href={item.url} target="_blank" rel="noopener noreferrer">
-            <b>
-              <span>{item.name}</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="resource-card-link"
+          >
+            <div class="resource-card-top">
+              <span class="resource-cat-pill">{item.catLabel}</span>
+              <svg class="resource-link-arrow" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                 <polyline points="15 3 21 3 21 9"></polyline>
                 <line x1="10" y1="14" x2="21" y2="3"></line>
               </svg>
-            </b>
-            <span>{item.tag}</span>
+            </div>
+            <h3 class="resource-name">{item.name}</h3>
+            <p class="resource-desc">{item.desc}</p>
+            <div class="resource-card-bottom">
+              <span class="resource-tag-pill">{item.tag}</span>
+            </div>
           </a>
         </li>
       ))}
@@ -115,7 +260,7 @@ const resources = [
         items.forEach((it) => {
           const itemEl = it as HTMLElement;
           const match = cat === 'all' || itemEl.dataset.category === cat;
-          itemEl.style.display = match ? 'block' : 'none';
+          itemEl.classList.toggle('is-hidden', !match);
         });
       });
     });

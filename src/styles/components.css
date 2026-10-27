@@ -621,35 +621,57 @@ pre code {
 }
 
 /* Resources Filter & Grid */
+/* Resources Filter & Card Grid */
+.resource-tabs,
 .resources-tabs {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  margin-bottom: 24px;
-  padding-bottom: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 24px;
 }
 
 .resource-tab-btn {
-  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
   border-radius: 999px;
   background: var(--paper-card);
   border: 1px solid var(--border);
   color: var(--muted);
-  font: 600 0.84rem var(--sans);
+  font: 500 0.86rem var(--sans);
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.resource-tab-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+  display: inline-block;
 }
 
 .resource-tab-btn:hover {
   color: var(--ink);
   border-color: var(--cobalt);
+  transform: translateY(-1px);
 }
 
 .resource-tab-btn[aria-selected="true"] {
   background: var(--cobalt);
   border-color: var(--cobalt);
   color: #ffffff;
+  box-shadow: 0 4px 14px var(--cobalt-glow);
+}
+
+.resource-tab-btn[aria-selected="true"] svg {
+  stroke: #ffffff;
 }
 
 .resources-grid {
@@ -657,51 +679,109 @@ pre code {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 16px;
 }
 
-.resource-item a {
+.resource-item {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 16px 18px;
-  background: var(--paper-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: var(--card-shadow);
-  transition: all 0.2s ease;
 }
 
-.resource-item a:hover {
-  transform: translateY(-2px);
+.resource-item.is-hidden {
+  display: none !important;
+}
+
+.resource-card-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 22px;
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.resource-card-link:hover {
+  transform: translateY(-3px);
   border-color: var(--cobalt);
   box-shadow: var(--card-shadow-hover);
 }
 
-.resource-item b {
+.resource-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.98rem;
-  color: var(--ink);
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.resource-item b svg {
-  width: 14px;
-  height: 14px;
-  stroke: var(--cobalt);
-  stroke-width: 2;
-  fill: none;
-}
-
-.resource-item span {
-  font-size: 0.76rem;
+.resource-cat-pill {
   font-family: var(--mono);
-  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: var(--cobalt);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+:root[data-theme="dark"] .resource-cat-pill {
+  background: rgba(59, 130, 246, 0.16);
+  color: #93c5fd;
+}
+
+.resource-link-arrow {
+  width: 15px;
+  height: 15px;
+  stroke: var(--muted);
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, stroke 0.2s ease;
+}
+
+.resource-card-link:hover .resource-link-arrow {
+  stroke: var(--cobalt);
+  transform: translate(2px, -2px);
+}
+
+.resource-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.resource-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.resource-card-bottom {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.resource-tag-pill {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
 }
 
 /* Side Tracker Rail */
