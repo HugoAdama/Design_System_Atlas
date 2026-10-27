@@ -389,3 +389,9 @@
     min-height: 240px;
   }
 }
+
+.rev {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-top: 24px;
+}

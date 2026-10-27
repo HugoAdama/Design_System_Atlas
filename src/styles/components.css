@@ -142,6 +142,15 @@
   color: #ffffff;
 }
 
+.lang-globe {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
 .kbd-hint {
   font: 600 0.72rem var(--mono);
   background: var(--paper-card);
@@ -327,17 +336,88 @@ pre code {
 }
 
 .spec {
+  --t-accent: #0047ff;
+  --t-radius: 8px;
+  --t-space: 16px;
+  --t-shadow: 0 4px 14px rgba(0, 71, 255, 0.08);
+  --t-font: var(--sans);
   background: var(--paper-card);
   border: 1px solid var(--border);
-  padding: 24px;
-  border-radius: 10px;
-  box-shadow: var(--card-shadow);
+  padding: calc(var(--t-space) * 1.4);
+  transition: padding 0.25s, border-radius 0.25s, box-shadow 0.25s, font-family 0.25s;
+  border-radius: var(--t-radius);
+  box-shadow: var(--t-shadow);
   color: var(--ink);
+  font-family: var(--t-font);
 }
 
 .spec h4 {
-  font-size: 1.4rem;
-  margin-bottom: 8px;
+  font-size: 1.55rem;
+  margin-bottom: 6px;
+  font-family: inherit;
+  color: var(--ink);
+}
+
+.spec p {
+  font-size: 0.95rem;
+  margin: 0 0 var(--t-space);
+  transition: margin 0.25s;
+  font-family: var(--sans);
+  color: var(--muted);
+}
+
+.spec .r {
+  display: flex;
+  gap: var(--t-space);
+  flex-wrap: wrap;
+  align-items: center;
+  transition: gap 0.25s;
+}
+
+.spec .inp,
+.spec .btn,
+.spec .tag {
+  border-radius: var(--t-radius);
+  transition: border-radius 0.25s, padding 0.25s, background 0.25s;
+}
+
+.inp {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: calc(var(--t-space) * 0.5) var(--t-space);
+  flex: 1 1 140px;
+  background: var(--paper);
+}
+
+.btn {
+  font: 700 0.95rem var(--sans);
+  background: var(--t-accent);
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: calc(var(--t-space) * 0.5) calc(var(--t-space) * 1.1);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.tag {
+  display: inline-block;
+  margin-top: var(--t-space);
+  font: 700 0.78rem var(--mono);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  background: var(--paper-2);
+  color: var(--ink);
+  border-radius: 4px;
 }
 
 .ctrl fieldset {
@@ -443,6 +523,24 @@ pre code {
   border-color: var(--cobalt);
   color: var(--cobalt);
   background: var(--paper-2);
+}
+
+.copy-tokens-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.spec-copy-row {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* ===================================================
@@ -847,6 +945,102 @@ pre code {
 .atoms div:nth-child(3) { height: 112px; }
 .atoms div:nth-child(4) { height: 156px; background: var(--paper-2); color: var(--ink); }
 .atoms div:nth-child(5) { height: 206px; background: var(--forest); color: var(--on-forest); }
+
+/* ===================================================
+   COMPONENTE: GOBERNANZA Y DESIGNOPS (.gov, .seq)
+   =================================================== */
+.gov {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.gov figure {
+  margin: 0;
+  flex: 1 1 240px;
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gov svg {
+  width: 100%;
+  max-width: 220px;
+  height: 130px;
+  display: block;
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: var(--paper-2);
+  margin-bottom: 16px;
+}
+
+.gov svg circle {
+  stroke: var(--ink);
+  stroke-width: 2;
+  fill: var(--paper-card);
+}
+
+.gov svg line {
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+}
+
+.gov figcaption {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.gov figcaption b {
+  color: var(--cobalt);
+}
+
+.seq {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 24px;
+  counter-reset: q;
+}
+
+.seq li {
+  flex: 1 1 140px;
+  counter-increment: q;
+  border-top: 3px solid var(--cobalt);
+  padding-top: 12px;
+}
+
+.seq li::before {
+  content: counter(q);
+  display: block;
+  font: italic 600 2.4rem / 1 var(--serif);
+  color: var(--cobalt);
+  margin-bottom: 4px;
+}
+
+.seq b {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.seq span {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.4;
+  display: block;
+}
 
 /* States Matrix (.states-grid) */
 .states-grid {
