@@ -1,5 +1,5 @@
 ---
-// Editorial Footer component with SVG icons
+// Editorial Footer component with author and repository link
 ---
 
 <footer>
@@ -8,7 +8,24 @@
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 7V4h16v3M9 20h6M12 4v16"></path>
       </svg>
-      <span>Tipografías: Bodoni Moda y Hanken Grotesk</span>
+      <span>Tipografias: Bodoni Moda y Hanken Grotesk</span>
+    </span>
+  </div>
+
+  <div class="footer-meta">
+    <span class="footer-badge">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+      <span>
+        <span data-i18n="footer.author">Desarrollado por</span>
+        <a
+          href="https://github.com/HugoAdama/Design_System_Atlas"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-author-link"
+        >Hugo Adama</a>
+      </span>
     </span>
   </div>
 
@@ -17,7 +34,23 @@
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
       </svg>
-      <span data-i18n="footer.colophon">Atlas de diseño &bull; Construido con Astro</span>
+      <span data-i18n="footer.colophon">Atlas de diseno &bull; Construido con Astro</span>
     </span>
   </div>
 </footer>
+
+<style>
+  .footer-author-link {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--cobalt);
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .footer-author-link:hover {
+    color: var(--cobalt);
+    text-decoration-color: var(--ink);
+  }
+</style>

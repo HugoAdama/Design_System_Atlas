@@ -107,6 +107,7 @@ export const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.colophon': 'Atlas de diseño web y sistemas de componentes',
     'footer.license': 'Inspirado en la tipografía editorial suiza y los estándares web abiertos.',
+    'footer.author': 'Desarrollado por',
   },
   en: {
     // Masthead & Navigation Controls
@@ -212,5 +213,6 @@ export const translations: Record<Language, Record<string, string>> = {
     // Footer
     'footer.colophon': 'Web design atlas and component design systems',
     'footer.license': 'Inspired by Swiss editorial typography and open web standards.',
+    'footer.author': 'Developed by',
   }
 };

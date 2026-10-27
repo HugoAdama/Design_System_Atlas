@@ -1,23 +1,11 @@
 ---
-const navLinks = [
-  { href: "#fundamentos", label: "Fundamentos", key: "nav.fundamentos" },
-  { href: "#ux", label: "Información y UX", key: "nav.ux" },
-  { href: "#frontend", label: "Frontend", key: "nav.frontend" },
-  { href: "#tendencias", label: "Tendencias", key: "nav.tendencias" },
-  { href: "#recursos", label: "Recursos", key: "nav.recursos" },
-];
+// Header masthead with global actions and reading progress bar
 ---
 
 <header class="mast">
   <div class="reading-bar" id="reading-bar" aria-hidden="true"></div>
   <div class="mast-inner">
     <a class="t" href="#top">Atlas de diseño</a>
-    
-    <nav aria-label="Capítulos">
-      {navLinks.map((link) => (
-        <a href={link.href} data-i18n={link.key}>{link.label}</a>
-      ))}
-    </nav>
 
     <div class="mast-actions">
       <!-- Language toggle button -->
