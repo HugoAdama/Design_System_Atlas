@@ -2,31 +2,32 @@
 import SpecimenPlate from './SpecimenPlate.astro';
 import BeforeAfterSlider from './BeforeAfterSlider.astro';
 import DoDontCompare from './DoDontCompare.astro';
+import ChapterPagination from './ChapterPagination.astro';
 ---
 
 <section class="ch" id="fundamentos">
-  <div class="side">
-    <h2>Fundamentos de un sistema de diseño</h2>
-    <p>La estructura viva que mantiene coherentes a todos los productos digitales de una organización.</p>
+  <div class="side reveal-on-scroll">
+    <h2 data-i18n="fundamentos.title">Fundamentos de un sistema de diseño</h2>
+    <p data-i18n="fundamentos.subtitle">La estructura viva que mantiene coherentes a todos los productos digitales de una organización.</p>
   </div>
   <div class="body">
     <p class="reveal-on-scroll">
       Una guía de estilo dice cómo se ve una marca. Una biblioteca de componentes entrega las piezas en código. Un sistema de diseño reúne ambas cosas y añade tokens, patrones, documentación y reglas para contribuir. Invertir en esa documentación se paga solo: menos decisiones repetidas, menos inconsistencias y entregas más rápidas.
     </p>
-    <blockquote class="reveal-on-scroll">Un sistema de diseño no es un documento: es una arquitectura.</blockquote>
+    <blockquote class="reveal-on-scroll" data-i18n="fundamentos.quote">Un sistema de diseño no es un documento: es una arquitectura.</blockquote>
 
     <!-- Comparador Antes vs Después -->
-    <h3 class="reveal-on-scroll">El impacto de un sistema en la pantalla</h3>
-    <p class="reveal-on-scroll">
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.impact.title">El impacto de un sistema en la pantalla</h3>
+    <p class="reveal-on-scroll" data-i18n="fundamentos.impact.p">
       Arrastra el separador para comparar el caos de una interfaz construida con valores ad-hoc frente a la armonía estructural que proporciona una malla de tokens:
     </p>
     <BeforeAfterSlider />
 
-    <h3 class="reveal-on-scroll">Playground de Design Tokens</h3>
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.playground.title">Playground de Design Tokens</h3>
     <SpecimenPlate />
 
-    <h3 class="reveal-on-scroll">Taxonomía de Design Tokens (Estándar W3C / DTCG)</h3>
-    <p class="reveal-on-scroll">
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.taxonomy.title">Taxonomía de Design Tokens (Estándar W3C / DTCG)</h3>
+    <p class="reveal-on-scroll" data-i18n="fundamentos.taxonomy.p">
       La especificación del <i>Design Tokens Community Group (W3C)</i> define cómo formalizar las decisiones de diseño para que se traduzcan de manera agnóstica a CSS, iOS, Android y Flutter. Se organizan en tres niveles jerárquicos:
     </p>
     <dl class="reveal-on-scroll">
@@ -66,15 +67,15 @@ import DoDontCompare from './DoDontCompare.astro';
     </div>
 
     <!-- Módulo Do vs Don't -->
-    <h3 class="reveal-on-scroll">Buenas y Malas Prácticas (Do's &amp; Don'ts)</h3>
-    <p class="reveal-on-scroll">
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.dodont.title">Buenas y Malas Prácticas (Do's &amp; Don'ts)</h3>
+    <p class="reveal-on-scroll" data-i18n="fundamentos.dodont.p">
       Errores arquitectónicos recurrentes y cómo prevenirlos mediante reglas estrictas de sistema:
     </p>
     <DoDontCompare />
 
     <!-- Matriz de Estados de Componentes -->
-    <h3 id="estados" class="reveal-on-scroll">Matriz de estados indispensables</h3>
-    <p class="reveal-on-scroll">
+    <h3 id="estados" class="reveal-on-scroll" data-i18n="fundamentos.states.title">Matriz de estados indispensables</h3>
+    <p class="reveal-on-scroll" data-i18n="fundamentos.states.p">
       Todo componente interactivo debe diseñar y codificar sus 6 estados fundamentales para garantizar previsibilidad y accesibilidad cognitiva:
     </p>
 
@@ -114,9 +115,9 @@ import DoDontCompare from './DoDontCompare.astro';
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
         </svg>
-        Accesibilidad y Contraste (WCAG 2.2 / APCA)
+        <span data-i18n="fundamentos.wcag.title">Accesibilidad y Contraste (WCAG 2.2 / APCA)</span>
       </h4>
-      <p>
+      <p data-i18n="fundamentos.wcag.p">
         Un sistema de diseño profesional no aprueba paletas sin verificar ratios de contraste. La norma WCAG 2.2 exige los siguientes estándares mínimos en cada tema:
       </p>
       <div class="contrast-meter-grid">
@@ -135,8 +136,8 @@ import DoDontCompare from './DoDontCompare.astro';
       </div>
     </div>
 
-    <h3 class="reveal-on-scroll">Atomic Design</h3>
-    <p class="note reveal-on-scroll">El método de Brad Frost: cada nivel se arma con el anterior.</p>
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.atomic.title">Atomic Design</h3>
+    <p class="note reveal-on-scroll" data-i18n="fundamentos.atomic.note">El método de Brad Frost: cada nivel se arma con el anterior.</p>
     <div class="atoms reveal-on-scroll reveal-stagger">
       <div>Átomos</div>
       <div>Moléculas</div>
@@ -145,8 +146,8 @@ import DoDontCompare from './DoDontCompare.astro';
       <div>Páginas</div>
     </div>
 
-    <h3 class="reveal-on-scroll">Gobernanza y DesignOps</h3>
-    <p class="reveal-on-scroll">Quién puede cambiar el sistema define cuánto dura.</p>
+    <h3 class="reveal-on-scroll" data-i18n="fundamentos.gov.title">Gobernanza y DesignOps</h3>
+    <p class="reveal-on-scroll" data-i18n="fundamentos.gov.p">Quién puede cambiar el sistema define cuánto dura.</p>
     <div class="gov reveal-on-scroll">
       <figure>
         <svg viewBox="0 0 210 130" role="img" aria-label="Un equipo central conectado con cuatro equipos">
@@ -190,5 +191,7 @@ import DoDontCompare from './DoDontCompare.astro';
       <li><b>Integración</b><span>Se documenta y se publica.</span></li>
     </ol>
     <p class="note reveal-on-scroll" style="margin-top:20px">DesignOps sostiene este ciclo con herramientas, calendario y comunicación para que el sistema siga vivo.</p>
+
+    <ChapterPagination nextId="ux" nextTitleKey="nav.ux" nextDefault="Información y UX" />
   </div>
 </section>

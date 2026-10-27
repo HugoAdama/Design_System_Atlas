@@ -1,10 +1,10 @@
 ---
 const navLinks = [
-  { href: "#fundamentos", label: "Fundamentos" },
-  { href: "#ux", label: "Información y UX" },
-  { href: "#frontend", label: "Frontend" },
-  { href: "#tendencias", label: "Tendencias" },
-  { href: "#recursos", label: "Recursos" },
+  { href: "#fundamentos", label: "Fundamentos", key: "nav.fundamentos" },
+  { href: "#ux", label: "Información y UX", key: "nav.ux" },
+  { href: "#frontend", label: "Frontend", key: "nav.frontend" },
+  { href: "#tendencias", label: "Tendencias", key: "nav.tendencias" },
+  { href: "#recursos", label: "Recursos", key: "nav.recursos" },
 ];
 ---
 
@@ -15,11 +15,28 @@ const navLinks = [
     
     <nav aria-label="Capítulos">
       {navLinks.map((link) => (
-        <a href={link.href}>{link.label}</a>
+        <a href={link.href} data-i18n={link.key}>{link.label}</a>
       ))}
     </nav>
 
     <div class="mast-actions">
+      <!-- Language toggle button -->
+      <button
+        id="lang-toggle"
+        class="lang-toggle-btn"
+        type="button"
+        aria-label="Cambiar idioma (Español / English)"
+        title="Cambiar idioma / Switch language (ES / EN)"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="lang-globe">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span class="lang-pill is-active" id="lang-pill-es">ES</span>
+        <span class="lang-pill" id="lang-pill-en">EN</span>
+      </button>
+
       <!-- Search button with SVG icon -->
       <button
         class="icon-btn open-search-trigger"
@@ -31,11 +48,11 @@ const navLinks = [
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <span>Buscar</span>
+        <span data-i18n="btn.search">Buscar</span>
         <span class="kbd-hint">Ctrl K</span>
       </button>
 
-      <!-- Theme toggle button with Sun / Moon SVG icons -->
+      <!-- Theme toggle button with Sun and Moon SVG icons -->
       <button
         id="theme-toggle"
         class="icon-btn"
@@ -43,7 +60,8 @@ const navLinks = [
         aria-label="Cambiar tema claro u oscuro"
         title="Alternar tema claro/oscuro"
       >
-        <svg id="theme-icon-sun" class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Sun Icon (Light) -->
+        <svg id="theme-icon-sun" class="theme-icon theme-sun" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
           <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -54,13 +72,19 @@ const navLinks = [
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
-        <span id="theme-btn-label">Tema</span>
+        <!-- Moon Icon (Dark) -->
+        <svg id="theme-icon-moon" class="theme-icon theme-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span id="theme-btn-label" data-i18n="btn.theme">Tema</span>
       </button>
     </div>
   </div>
 </header>
 
 <script>
+  import { applyLanguage, toggleLanguage, getStoredLanguage } from '../i18n/client';
+
   function setupMasthead() {
     // 1. Reading Progress Bar
     const bar = document.getElementById('reading-bar');
@@ -87,6 +111,17 @@ const navLinks = [
         } catch (_) {}
       });
     }
+
+    // 3. Language Toggle
+    const langBtn = document.getElementById('lang-toggle');
+    if (langBtn) {
+      langBtn.addEventListener('click', () => {
+        toggleLanguage();
+      });
+    }
+
+    // Apply stored language on setup
+    applyLanguage(getStoredLanguage());
   }
 
   setupMasthead();

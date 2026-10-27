@@ -1,30 +1,5 @@
 ---
-// Interactive Search Modal for Atlas de diseño
-const searchData = [
-  { title: "Design Tokens (DTCG)", section: "Fundamentos", href: "#fundamentos", desc: "Taxonomía W3C: Global, Semántico y Componente en formato estándar." },
-  { title: "Comparador Antes vs Después (Split Slider)", section: "Fundamentos", href: "#before-after-slider", desc: "Impacto visual interactivo de diseñar con mallas y tokens vs valores ad-hoc." },
-  { title: "Buenas y Malas Prácticas (Do's & Don'ts)", section: "Fundamentos", href: "#fundamentos", desc: "Patrones recomendados vs antipatrones en tokens, áreas táctiles y CLS." },
-  { title: "Calculadora de Escala Tipográfica Modular", section: "Información y UX", href: "#ux", desc: "Generación en vivo de escalas tipográficas en rem y px con proporciones matemáticas." },
-  { title: "Playground de Tokens 2.0", section: "Fundamentos", href: "#spec", desc: "Experimentación en vivo con exportación a CSS, Tailwind v4 y W3C JSON." },
-  { title: "Matriz de Estados de Componentes", section: "Fundamentos", href: "#estados", desc: "Default, hover, active, focus-visible, disabled y loading." },
-  { title: "Accesibilidad y Contraste WCAG 2.2", section: "Fundamentos", href: "#accesibilidad", desc: "Ratios 4.5:1, 3:1, APCA y contraste no dependiente del color." },
-  { title: "Gobernanza y DesignOps", section: "Fundamentos", href: "#fundamentos", desc: "Modelos centralizados vs distribuidos y ciclo de contribución." },
-  { title: "Ley de Hick", section: "UX e Información", href: "#ux-leyes", desc: "El tiempo de decisión aumenta logarítmicamente con el número de opciones." },
-  { title: "Ley de Fitts", section: "UX e Información", href: "#ux-leyes", desc: "Tamaño y distancia mínima de objetivos interactivos (44x44px)." },
-  { title: "Ley de Miller", section: "UX e Información", href: "#ux-leyes", desc: "Capacidad de memoria de trabajo humana: 7 ± 2 trozos (chunks)." },
-  { title: "Ley de Jakob", section: "UX e Información", href: "#ux-leyes", desc: "Los usuarios esperan que tu interfaz funcione como las que ya conocen." },
-  { title: "Anatomía de Navegación y Empty States", section: "UX e Información", href: "#ux", desc: "Header, Sidebar, Bottom Navigation y estados de carga o error." },
-  { title: "Modern CSS: @container queries", section: "Frontend", href: "#frontend-moderno", desc: "Componentes adaptables a su contenedor sin depender del viewport." },
-  { title: "Selector relacional :has()", section: "Frontend", href: "#frontend-moderno", desc: "Estilos condicionales ascendentes nativos sin necesidad de JS." },
-  { title: "View Transitions API", section: "Frontend", href: "#frontend-moderno", desc: "Transiciones nativas y fluidas entre estados y páginas." },
-  { title: "Core Web Vitals para UI Designers", section: "Frontend", href: "#frontend-cwv", desc: "INP (Interaction to Next Paint), LCP y CLS explicados para diseño." },
-  { title: "Arquitectura de Islas Astro", section: "Frontend", href: "#frontend", desc: "HTML estático con hidratación parcial client:visible." },
-  { title: "Glassmorphism & Spatial UI", section: "Tendencias", href: "#tendencias", desc: "Desenfoque backdrop-filter, refracción y elevaciones de cristal." },
-  { title: "Bento Grid Layout", section: "Tendencias", href: "#tendencias", desc: "Composición modular y escaneable para dashboards y landings." },
-  { title: "Tipografía Expresiva & Variable", section: "Tendencias", href: "#tendencias", desc: "Ejes variables (wght, opsz, wdth) y tipografía cinética." },
-  { title: "Neobrutalismo Digital", section: "Tendencias", href: "#tendencias", desc: "Bordes negros de 3px, sombras duras y paletas primarias." },
-  { title: "Recursos y Especificaciones", section: "Recursos", href: "#recursos", desc: "W3C DTCG, WAI-ARIA, blogs técnicos y bibliotecas de componentes." },
-];
+import { searchIndex } from '../data';
 ---
 
 <dialog id="search-dialog" class="search-dialog" aria-label="Buscador del Atlas">
@@ -39,6 +14,7 @@ const searchData = [
         id="search-input"
         class="search-input"
         placeholder="Buscar conceptos, tokens, leyes de UX o patrones..."
+        data-i18n-placeholder="search.placeholder"
         autocomplete="off"
         spellcheck="false"
       />
@@ -51,8 +27,17 @@ const searchData = [
     </div>
 
     <ul id="search-results" class="search-results-list" role="listbox">
-      {searchData.map((item, index) => (
-        <li class="search-item" data-title={item.title.toLowerCase()} data-desc={item.desc.toLowerCase()} data-section={item.section.toLowerCase()}>
+      {searchIndex.map((item) => (
+        <li
+          class="search-item"
+          data-title={item.title.toLowerCase()}
+          data-title-en={item.titleEn?.toLowerCase() || ''}
+          data-desc={item.desc.toLowerCase()}
+          data-desc-en={item.descEn?.toLowerCase() || ''}
+          data-section={item.section.toLowerCase()}
+          data-section-en={item.sectionEn?.toLowerCase() || ''}
+          data-tags={item.tags?.join(' ') || ''}
+        >
           <a href={item.href} class="search-link">
             <span class="search-item-section">{item.section}</span>
             <span class="search-item-title">{item.title}</span>
@@ -63,8 +48,8 @@ const searchData = [
     </ul>
 
     <div class="search-footer-hint">
-      <span>Navegar con ↑ / ↓ &bull; Enter para abrir</span>
-      <span>ESC para cerrar</span>
+      <span data-i18n="search.hint.nav">Navegar con ↑ / ↓ &bull; Enter para abrir</span>
+      <span data-i18n="search.hint.esc">ESC para cerrar</span>
     </div>
   </div>
 </dialog>
@@ -108,15 +93,27 @@ const searchData = [
       }
     });
 
-    // Filtro en vivo
+    // Filtro en vivo bilingüe y por etiquetas
     input.addEventListener('input', () => {
       const q = input.value.trim().toLowerCase();
       items.forEach((it) => {
         const el = it as HTMLElement;
         const title = el.dataset.title || '';
+        const titleEn = el.dataset.titleEn || '';
         const desc = el.dataset.desc || '';
+        const descEn = el.dataset.descEn || '';
         const section = el.dataset.section || '';
-        const match = !q || title.includes(q) || desc.includes(q) || section.includes(q);
+        const sectionEn = el.dataset.sectionEn || '';
+        const tags = el.dataset.tags || '';
+        const match =
+          !q ||
+          title.includes(q) ||
+          titleEn.includes(q) ||
+          desc.includes(q) ||
+          descEn.includes(q) ||
+          section.includes(q) ||
+          sectionEn.includes(q) ||
+          tags.includes(q);
         el.style.display = match ? 'block' : 'none';
       });
     });

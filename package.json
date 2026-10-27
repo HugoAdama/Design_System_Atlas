@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "test": "node scripts/qa-audit.js",
+    "audit": "astro build && node scripts/qa-audit.js"
   },
   "dependencies": {
     "astro": "^7.4.2"

@@ -1,11 +1,12 @@
 ---
 // Visual trends gallery with modern aesthetics and micro-interactions
+import ChapterPagination from './ChapterPagination.astro';
 ---
 
 <section class="ch" id="tendencias">
   <div class="side reveal-on-scroll">
-    <h2>Tendencias y estilos visuales</h2>
-    <p>Una sección que se actualiza y que también sirve como archivo de lo que fue y de lo que se consolidó.</p>
+    <h2 data-i18n="tendencias.title">Tendencias y estilos visuales</h2>
+    <p data-i18n="tendencias.subtitle">Una sección que se actualiza y que también sirve como archivo de lo que fue y de lo que se consolidó.</p>
   </div>
   <div class="body">
     <div class="gal reveal-on-scroll reveal-stagger">
@@ -77,6 +78,14 @@
     </div>
 
     <p class="rev">Última revisión: Octubre de 2026.</p>
+    <ChapterPagination
+      prevId="frontend"
+      prevTitleKey="nav.frontend"
+      prevDefault="Frontend"
+      nextId="recursos"
+      nextTitleKey="nav.recursos"
+      nextDefault="Recursos"
+    />
   </div>
 </section>
 

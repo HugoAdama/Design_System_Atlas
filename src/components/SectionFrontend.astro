@@ -1,4 +1,6 @@
 ---
+import ChapterPagination from './ChapterPagination.astro';
+import ContainerQueryDemo from './ContainerQueryDemo.astro';
 const patterns = [
   { name: "Component-based", solves: "Interfaces armadas con piezas reutilizables, la base de toda librería." },
   { name: "Micro-frontends", solves: "Equipos independientes publican partes distintas de un mismo producto." },
@@ -35,8 +37,8 @@ const modernCssFeatures = [
 
 <section class="ch" id="frontend">
   <div class="side reveal-on-scroll">
-    <h2>Arquitectura frontend y patrones técnicos</h2>
-    <p>La capa de implementación que garantiza escalabilidad, velocidad y mantenimiento.</p>
+    <h2 data-i18n="frontend.title">Arquitectura frontend y patrones técnicos</h2>
+    <p data-i18n="frontend.subtitle">La capa de implementación que garantiza escalabilidad, velocidad y mantenimiento.</p>
   </div>
   <div class="body">
     <p class="reveal-on-scroll">
@@ -44,8 +46,8 @@ const modernCssFeatures = [
     </p>
 
     <!-- Modern CSS APIs -->
-    <h3 id="frontend-moderno" class="reveal-on-scroll">Capacidades modernas de CSS (2025–2026)</h3>
-    <p class="reveal-on-scroll">El estándar web ha absorbido patrones que antes requerían complejas librerías de JavaScript:</p>
+    <h3 id="frontend-moderno" class="reveal-on-scroll" data-i18n="frontend.modern.title">Capacidades modernas de CSS (2025–2026)</h3>
+    <p class="reveal-on-scroll" data-i18n="frontend.modern.p">El estándar web ha absorbido patrones que antes requerían complejas librerías de JavaScript:</p>
 
     <div class="tw reveal-on-scroll">
       <table>
@@ -68,9 +70,11 @@ const modernCssFeatures = [
       </table>
     </div>
 
+    <ContainerQueryDemo />
+
     <!-- Core Web Vitals para diseñadores -->
-    <h3 id="frontend-cwv" class="reveal-on-scroll">Core Web Vitals para Diseñadores de UI</h3>
-    <p class="reveal-on-scroll">Las decisiones visuales determinan directamente el rendimiento real experimentado por el usuario:</p>
+    <h3 id="frontend-cwv" class="reveal-on-scroll" data-i18n="frontend.cwv.title">Core Web Vitals para Diseñadores de UI</h3>
+    <p class="reveal-on-scroll" data-i18n="frontend.cwv.p">Las decisiones visuales determinan directamente el rendimiento real experimentado por el usuario:</p>
 
     <div class="cwv-grid reveal-on-scroll reveal-stagger">
       <div class="cwv-card">
@@ -90,7 +94,7 @@ const modernCssFeatures = [
       </div>
     </div>
 
-    <h3 class="reveal-on-scroll">Patrones arquitectónicos de interfaz</h3>
+    <h3 class="reveal-on-scroll" data-i18n="frontend.patterns.title">Patrones arquitectónicos de interfaz</h3>
     <div class="tw reveal-on-scroll">
       <table>
         <thead>
@@ -110,7 +114,7 @@ const modernCssFeatures = [
       </table>
     </div>
 
-    <h3 class="reveal-on-scroll">Una isla Astro en la práctica</h3>
+    <h3 class="reveal-on-scroll" data-i18n="frontend.island.title">Una isla Astro en la práctica</h3>
     <div class="code-wrapper reveal-on-scroll">
       <div class="code-badge">
         <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" aria-hidden="true">
@@ -131,5 +135,14 @@ import <b>FichaProducto</b> from "../components/FichaProducto.astro";
     <p class="note" style="margin-top:20px">
       Stack de referencia recomendado: TypeScript estricto, Astro / Server Components, Tailwind v4 / CSS Tokens, componentes Headless (Radix UI / Ark UI) y Storybook para catalogación visual.
     </p>
+
+    <ChapterPagination
+      prevId="ux"
+      prevTitleKey="nav.ux"
+      prevDefault="Información y UX"
+      nextId="tendencias"
+      nextTitleKey="nav.tendencias"
+      nextDefault="Tendencias"
+    />
   </div>
 </section>

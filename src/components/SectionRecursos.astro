@@ -1,4 +1,5 @@
 ---
+import ChapterPagination from './ChapterPagination.astro';
 const resources = [
   // Especificaciones
   { cat: "specs", name: "W3C Design Tokens Community Group", tag: "especificación oficial", url: "https://design-tokens.github.io/community-group/format/" },
@@ -30,8 +31,8 @@ const resources = [
 
 <section class="ch" id="recursos">
   <div class="side reveal-on-scroll">
-    <h2>Recursos, blogs y herramientas</h2>
-    <p>La sección a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
+    <h2 data-i18n="recursos.title">Recursos, blogs y herramientas</h2>
+    <p data-i18n="recursos.subtitle">La sección a la que se vuelve. Enlaces contrastados y actualizados con especificaciones vivas para el trabajo diario.</p>
   </div>
   <div class="body idx">
     <div class="resource-tabs reveal-on-scroll" role="tablist">
@@ -41,21 +42,21 @@ const resources = [
           <line x1="2" y1="12" x2="22" y2="12"></line>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <span>Todos</span>
+        <span data-i18n="recursos.tab.all">Todos</span>
       </button>
       <button type="button" class="resource-tab-btn" data-cat="specs" aria-selected="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
-        <span>Especificaciones W3C</span>
+        <span data-i18n="recursos.tab.specs">Especificaciones W3C</span>
       </button>
       <button type="button" class="resource-tab-btn" data-cat="tools" aria-selected="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
           <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
         </svg>
-        <span>Herramientas</span>
+        <span data-i18n="recursos.tab.tools">Herramientas</span>
       </button>
       <button type="button" class="resource-tab-btn" data-cat="ux" aria-selected="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -63,14 +64,14 @@ const resources = [
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
-        <span>UX & Usabilidad</span>
+        <span data-i18n="recursos.tab.ux">UX & Usabilidad</span>
       </button>
       <button type="button" class="resource-tab-btn" data-cat="blogs" aria-selected="false">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
-        <span>Publicaciones</span>
+        <span data-i18n="recursos.tab.blogs">Publicaciones</span>
       </button>
     </div>
 
@@ -91,6 +92,12 @@ const resources = [
         </li>
       ))}
     </ul>
+
+    <ChapterPagination
+      prevId="tendencias"
+      prevTitleKey="nav.tendencias"
+      prevDefault="Tendencias"
+    />
   </div>
 </section>
 

@@ -1,0 +1,347 @@
+---
+// Interactive visual demonstration of CSS Container Queries (@container)
+---
+
+<div class="cq-demo-wrapper reveal-on-scroll">
+  <div class="cq-demo-header">
+    <div class="cq-demo-title">
+      <span class="cq-tag">Laboratorio Visual de CSS Moderno</span>
+      <h4>Demostracion interactiva de @container queries</h4>
+    </div>
+    <div class="cq-controls" role="radiogroup" aria-label="Ancho del contenedor">
+      <button type="button" class="cq-size-btn" data-width="280px" role="radio" aria-checked="false">
+        Estrecho (280px)
+      </button>
+      <button type="button" class="cq-size-btn is-active" data-width="440px" role="radio" aria-checked="true">
+        Medio (440px)
+      </button>
+      <button type="button" class="cq-size-btn" data-width="100%" role="radio" aria-checked="false">
+        Expandido (100%)
+      </button>
+    </div>
+  </div>
+
+  <div class="cq-stage-area">
+    <div class="cq-resizable-box" id="cq-resizable-box" style="width: 440px;">
+      <div class="cq-width-indicator">
+        <span class="cq-rule-arrow left">&larr;</span>
+        <span id="cq-current-width-text">Ancho del contenedor: 440px</span>
+        <span class="cq-rule-arrow right">&rarr;</span>
+      </div>
+
+      <!-- Container query component card -->
+      <article class="cq-adaptive-card">
+        <div class="cq-card-media">
+          <div class="cq-media-art">
+            <svg viewBox="0 0 80 80" width="80" height="80" fill="none" aria-hidden="true">
+              <rect x="10" y="10" width="60" height="60" rx="8" fill="var(--paper-2)" stroke="var(--cobalt)" stroke-width="2"></rect>
+              <circle cx="32" cy="32" r="8" fill="var(--cobalt)" opacity="0.3"></circle>
+              <path d="M16 62l18-18 14 14 12-12 10 10" stroke="var(--cobalt)" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <span class="cq-badge-dtcg">DTCG Token Card</span>
+        </div>
+
+        <div class="cq-card-content">
+          <div class="cq-header-row">
+            <span class="cq-category">Sistemas de Diseno</span>
+            <span class="cq-status-chip">Produccion</span>
+          </div>
+          <h4 class="cq-title">Boton Primario &bull; Component Token</h4>
+          <p class="cq-summary">
+            El componente se adapta a las dimensiones de su columna contenedora sin depender del ancho total de la ventana grafica (viewport).
+          </p>
+
+          <div class="cq-footer-row">
+            <div class="cq-meta-item">
+              <span class="cq-meta-label">Especificacion:</span>
+              <span class="cq-meta-val">W3C Format</span>
+            </div>
+            <button type="button" class="cq-action-btn">Inspeccionar token</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="cq-code-footer">
+    <div class="cq-code-info">
+      <code>@container (min-width: 400px) &#123; .cq-adaptive-card &#123; grid-template-columns: 140px 1fr; &#125; &#125;</code>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cq-demo-wrapper {
+    margin: 2rem 0;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+
+  .cq-demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--border-subtle);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cq-demo-title h4 {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.96rem;
+    color: var(--ink);
+  }
+
+  .cq-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--cobalt);
+    font-family: var(--mono);
+  }
+
+  .cq-controls {
+    display: flex;
+    gap: 0.4rem;
+    background: var(--paper-card);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .cq-size-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .cq-size-btn:hover {
+    color: var(--ink);
+  }
+
+  .cq-size-btn.is-active {
+    background: var(--paper-2);
+    color: var(--cobalt);
+    font-weight: 600;
+  }
+
+  .cq-stage-area {
+    padding: 2rem 1.5rem;
+    background: var(--paper);
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  .cq-resizable-box {
+    max-width: 100%;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    container-type: inline-size;
+    container-name: cardcontainer;
+  }
+
+  .cq-width-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    background: var(--paper-2);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* Adaptive card styled with native CSS @container */
+  .cq-adaptive-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px -2px rgba(9, 13, 22, 0.05);
+    transition: all 0.25s ease;
+  }
+
+  .cq-card-media {
+    position: relative;
+    height: 140px;
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .cq-badge-dtcg {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    background: var(--paper-card);
+    color: var(--cobalt);
+    border-radius: 4px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .cq-card-content {
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cq-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cq-category {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cq-status-chip {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #059669;
+    background: #ecfdf5;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  :root[data-theme="dark"] .cq-status-chip {
+    background: #064e3b;
+    color: #34d399;
+  }
+
+  .cq-title {
+    margin: 0;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+
+  .cq-summary {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .cq-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+    gap: 0.5rem;
+  }
+
+  .cq-meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cq-meta-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .cq-meta-val {
+    font-size: 0.78rem;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .cq-action-btn {
+    padding: 0.45rem 0.9rem;
+    background: var(--cobalt);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* NATIVE @container QUERY RULE */
+  @container cardcontainer (min-width: 400px) {
+    .cq-adaptive-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+    }
+
+    .cq-card-media {
+      height: 100%;
+      border-bottom: none;
+      border-right: 1px solid var(--border-subtle);
+    }
+  }
+
+  .cq-code-footer {
+    padding: 0.65rem 1.25rem;
+    background: var(--paper-2);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .cq-code-info code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--cobalt);
+  }
+</style>
+
+<script>
+  function setupCqDemo() {
+    const buttons = document.querySelectorAll('.cq-size-btn');
+    const box = document.getElementById('cq-resizable-box');
+    const textIndicator = document.getElementById('cq-current-width-text');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-checked', 'true');
+
+        const width = (btn as HTMLElement).dataset.width || '440px';
+        if (box) {
+          box.style.width = width;
+          if (textIndicator) {
+            textIndicator.textContent = `Ancho del contenedor: ${width === '100%' ? 'Expandido (100%)' : width}`;
+          }
+        }
+      });
+    });
+  }
+
+  setupCqDemo();
+  document.addEventListener('astro:page-load', setupCqDemo);
+</script>

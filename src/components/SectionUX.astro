@@ -1,5 +1,7 @@
 ---
 import TypeScaleCalculator from './TypeScaleCalculator.astro';
+import ChapterPagination from './ChapterPagination.astro';
+import NavigationAnatomyDemo from './NavigationAnatomyDemo.astro';
 
 const uxLaws = [
   {
@@ -45,17 +47,17 @@ const processSteps = [
 ---
 
 <section class="ch" id="ux">
-  <div class="side">
-    <h2>Arquitectura de información y UX</h2>
-    <p>La estructura invisible que permite orientarse y encontrar lo que se busca sin fricción.</p>
+  <div class="side reveal-on-scroll">
+    <h2 data-i18n="ux.title">Arquitectura de información y UX</h2>
+    <p data-i18n="ux.subtitle">La estructura invisible que permite orientarse y encontrar lo que se busca sin fricción.</p>
   </div>
   <div class="body">
     <p class="reveal-on-scroll">
       La arquitectura de diseño no se entiende sin la arquitectura de información. De ella dependen la experiencia, la facilidad para encontrar contenido y, al final, la conversión y retención del usuario.
     </p>
 
-    <h3 id="ux-leyes" class="reveal-on-scroll">Leyes cognitivas aplicadas a la interfaz</h3>
-    <p class="reveal-on-scroll">Principios psicológicos indispensables para justificar cualquier decisión de layout y carga cognitiva:</p>
+    <h3 id="ux-leyes" class="reveal-on-scroll" data-i18n="ux.laws.title">Leyes cognitivas aplicadas a la interfaz</h3>
+    <p class="reveal-on-scroll" data-i18n="ux.laws.p">Principios psicológicos indispensables para justificar cualquier decisión de layout y carga cognitiva:</p>
 
     <div class="laws-grid reveal-on-scroll reveal-stagger">
       {uxLaws.map((law) => (
@@ -73,13 +75,14 @@ const processSteps = [
     </div>
 
     <!-- Calculadora de escala modular -->
-    <h3 class="reveal-on-scroll">Herramienta: Calculadora de Escala Tipográfica Modular</h3>
-    <p class="reveal-on-scroll">
+    <h3 class="reveal-on-scroll" data-i18n="ux.calc.title">Herramienta: Calculadora de Escala Tipográfica Modular</h3>
+    <p class="reveal-on-scroll" data-i18n="ux.calc.p">
       Una jerarquía tipográfica no debe basarse en números aleatorios. Selecciona una proporción matemática para generar tokens armónicos y previsualizarlos en vivo:
     </p>
     <TypeScaleCalculator />
 
-    <h3 class="reveal-on-scroll">Anatomía de navegación y modelos de pantalla</h3>
+    <h3 class="reveal-on-scroll" data-i18n="ux.nav.title">Anatomía de navegación y modelos de pantalla</h3>
+    <NavigationAnatomyDemo />
     <div class="tw reveal-on-scroll">
       <table>
         <thead>
@@ -114,8 +117,8 @@ const processSteps = [
       </table>
     </div>
 
-    <h3 class="reveal-on-scroll">Estados de pantalla: Vacío, Carga y Error</h3>
-    <p class="reveal-on-scroll">Una arquitectura sólida prevé el comportamiento de la interfaz cuando los datos no están disponibles:</p>
+    <h3 class="reveal-on-scroll" data-i18n="ux.states.title">Estados de pantalla: Vacío, Carga y Error</h3>
+    <p class="reveal-on-scroll" data-i18n="ux.states.p">Una arquitectura sólida prevé el comportamiento de la interfaz cuando los datos no están disponibles:</p>
     <ul class="prin reveal-on-scroll">
       <li>
         <b>Empty States (Estados vacíos con propósito)</b>
@@ -131,7 +134,7 @@ const processSteps = [
       </li>
     </ul>
 
-    <h3 class="reveal-on-scroll">Principios de diseño de información</h3>
+    <h3 class="reveal-on-scroll" data-i18n="ux.principles.title">Principios de diseño de información</h3>
     <ul class="prin reveal-on-scroll">
       {principles.map((item) => (
         <li>
@@ -141,7 +144,7 @@ const processSteps = [
       ))}
     </ul>
 
-    <h3 class="reveal-on-scroll">Proceso práctico de diseño</h3>
+    <h3 class="reveal-on-scroll" data-i18n="ux.process.title">Proceso práctico de diseño</h3>
     <ol class="seq reveal-on-scroll" style="margin-top:0">
       {processSteps.map((step) => (
         <li>
@@ -150,5 +153,14 @@ const processSteps = [
         </li>
       ))}
     </ol>
+
+    <ChapterPagination
+      prevId="fundamentos"
+      prevTitleKey="nav.fundamentos"
+      prevDefault="Fundamentos"
+      nextId="frontend"
+      nextTitleKey="nav.frontend"
+      nextDefault="Frontend"
+    />
   </div>
 </section>

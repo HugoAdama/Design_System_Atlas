@@ -20,11 +20,18 @@ const {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg`} />
     
-    <!-- Open Graph / Meta -->
+    <!-- Open Graph & Twitter Cards -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hugoadama.github.io/Design_System_Atlas/" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://hugoadama.github.io/Design_System_Atlas/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://hugoadama.github.io/Design_System_Atlas/og-image.jpg" />
 
     <title>{title}</title>
 
@@ -36,13 +43,19 @@ const {
       href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;700&display=swap"
     />
 
-    <!-- Theme persistence script (prevents FOUC) -->
+    <!-- Theme & Language persistence script (prevents FOUC) -->
     <script is:inline>
       (function() {
         try {
-          const stored = localStorage.getItem('theme');
-          if (stored) {
-            document.documentElement.setAttribute('data-theme', stored);
+          const storedTheme = localStorage.getItem('theme');
+          if (storedTheme) {
+            document.documentElement.setAttribute('data-theme', storedTheme);
+          }
+          const storedLang = localStorage.getItem('atlas_lang');
+          if (storedLang) {
+            document.documentElement.lang = storedLang;
+          } else if (navigator.language && navigator.language.startsWith('en')) {
+            document.documentElement.lang = 'en';
           }
         } catch (_) {}
       })();

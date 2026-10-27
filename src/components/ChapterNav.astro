@@ -1,0 +1,419 @@
+---
+import { navigationItems } from '../data';
+---
+
+<nav class="chapter-nav-bar" id="chapter-nav-bar" aria-label="Selector de capítulos y modo de vista">
+  <div class="chapter-nav-inner">
+    <!-- Chapter Pills Navigation -->
+    <div class="chapter-pills-scroll" role="tablist" aria-label="Capítulos del Atlas">
+      {navigationItems.map((item) => (
+        <a
+          href={item.href}
+          class="chapter-tab-btn"
+          role="tab"
+          data-chapter-id={item.id}
+          aria-selected="false"
+        >
+          <span class="chapter-badge">{item.badge}</span>
+          <span class="chapter-name" data-i18n={item.titleKey}>{item.defaultTitle}</span>
+        </a>
+      ))}
+    </div>
+
+    <!-- View Mode Switcher: By Chapters vs Continuous -->
+    <div class="view-mode-control">
+      <span class="view-mode-label" data-i18n="nav.mode.label">Vista:</span>
+      <div class="view-mode-toggle" role="radiogroup" aria-label="Modo de lectura">
+        <button
+          type="button"
+          id="mode-chapter-btn"
+          class="mode-btn is-active"
+          role="radio"
+          aria-checked="true"
+          data-mode="chapter"
+          title="Muestra un capítulo a la vez, reduciendo la longitud de scroll"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="mode-icon">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span data-i18n="nav.mode.chapters">Por Capítulos</span>
+        </button>
+
+        <button
+          type="button"
+          id="mode-continuous-btn"
+          class="mode-btn"
+          role="radio"
+          aria-checked="false"
+          data-mode="continuous"
+          title="Muestra todas las secciones de corrido en una sola página"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="mode-icon">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          <span data-i18n="nav.mode.continuous">Continuo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .chapter-nav-bar {
+    position: sticky;
+    top: 49px;
+    z-index: 80;
+    background: rgba(251, 251, 250, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 18px -4px rgba(9, 13, 22, 0.04);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  :root[data-theme="dark"] .chapter-nav-bar {
+    background: rgba(8, 11, 17, 0.88);
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .chapter-nav-bar {
+      background: rgba(8, 11, 17, 0.88);
+      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .chapter-nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .chapter-pills-scroll {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0;
+  }
+
+  .chapter-pills-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chapter-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .chapter-tab-btn:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+
+  .chapter-tab-btn.is-active {
+    color: var(--on-forest);
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    box-shadow: 0 2px 8px -1px var(--cobalt-glow);
+  }
+
+  .chapter-badge {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    opacity: 0.75;
+    font-weight: 600;
+  }
+
+  .chapter-tab-btn.is-active .chapter-badge {
+    opacity: 0.95;
+    color: #fff;
+  }
+
+  /* View mode switcher */
+  .view-mode-control {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .view-mode-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .view-mode-toggle {
+    display: inline-flex;
+    background: var(--paper-2);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mode-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .mode-btn:hover {
+    color: var(--ink);
+  }
+
+  .mode-btn.is-active {
+    background: var(--paper-card);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(9, 13, 22, 0.08);
+  }
+
+  @media (max-width: 900px) {
+    .chapter-nav-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.6rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .view-mode-control {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  function setupNavigationSystem() {
+    const mainEl = document.querySelector('main');
+    if (!mainEl) return;
+
+    const sections = Array.from(mainEl.querySelectorAll('section.ch')) as HTMLElement[];
+    const tabs = Array.from(document.querySelectorAll('.chapter-tab-btn')) as HTMLElement[];
+    const modeChapterBtn = document.getElementById('mode-chapter-btn');
+    const modeContinuousBtn = document.getElementById('mode-continuous-btn');
+
+    // 1. Obtener o definir modo de vista actual
+    let viewMode = localStorage.getItem('atlas_view_mode') || 'chapter';
+    
+    // Obtener capítulo activo inicial desde URL hash o por defecto el primero
+    const initialHash = window.location.hash.replace('#', '');
+    let activeChapterId = 'fundamentos';
+
+    const validIds = sections.map((s) => s.id);
+    if (validIds.includes(initialHash)) {
+      activeChapterId = initialHash;
+    } else if (initialHash) {
+      // Buscar si el ancla está contenida dentro de alguna sección
+      const targetEl = document.getElementById(initialHash);
+      if (targetEl) {
+        const parentSec = targetEl.closest('section.ch');
+        if (parentSec && validIds.includes(parentSec.id)) {
+          activeChapterId = parentSec.id;
+        }
+      }
+    }
+
+    // 2. Aplicar modo de vista
+    function applyViewMode(mode: string, targetChapter?: string) {
+      viewMode = mode;
+      localStorage.setItem('atlas_view_mode', mode);
+
+      if (mode === 'chapter') {
+        mainEl?.setAttribute('data-view-mode', 'chapter');
+        modeChapterBtn?.classList.add('is-active');
+        modeChapterBtn?.setAttribute('aria-checked', 'true');
+        modeContinuousBtn?.classList.remove('is-active');
+        modeContinuousBtn?.setAttribute('aria-checked', 'false');
+
+        const chId = targetChapter || activeChapterId;
+        activateChapter(chId, false);
+      } else {
+        mainEl?.setAttribute('data-view-mode', 'continuous');
+        modeContinuousBtn?.classList.add('is-active');
+        modeContinuousBtn?.setAttribute('aria-checked', 'true');
+        modeChapterBtn?.classList.remove('is-active');
+        modeChapterBtn?.setAttribute('aria-checked', 'false');
+
+        // En modo continuo, todas las secciones son visibles
+        sections.forEach((sec) => {
+          sec.style.display = '';
+        });
+      }
+    }
+
+    // 3. Activar capítulo específico
+    function activateChapter(chapterId: string, shouldScroll = true) {
+      if (!validIds.includes(chapterId)) return;
+      activeChapterId = chapterId;
+
+      // Actualizar tabs y tracker-pills laterales
+      tabs.forEach((tab) => {
+        const isTarget = tab.dataset.chapterId === chapterId;
+        tab.classList.toggle('is-active', isTarget);
+        tab.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+      });
+
+      document.querySelectorAll('.tracker-pill').forEach((p) => {
+        const pillEl = p as HTMLElement;
+        pillEl.classList.toggle('active', pillEl.dataset.target === chapterId);
+      });
+
+      if (viewMode === 'chapter') {
+        sections.forEach((sec) => {
+          if (sec.id === chapterId) {
+            sec.style.display = 'grid'; // Layout grid estándar de section.ch
+            sec.classList.add('is-active-chapter');
+            
+            // Disparar reveals dentro de la sección activa
+            sec.querySelectorAll('.reveal-on-scroll:not(.is-visible)').forEach((el) => {
+              el.classList.add('is-visible');
+            });
+          } else {
+            sec.style.display = 'none';
+            sec.classList.remove('is-active-chapter');
+          }
+        });
+
+        if (shouldScroll) {
+          const targetSection = document.getElementById(chapterId);
+          if (targetSection) {
+            const navBarHeight = 110; // Masthead (49px) + ChapterNav (~55px)
+            const topPos = targetSection.getBoundingClientRect().top + window.scrollY - navBarHeight;
+            window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+          }
+        }
+      } else {
+        // En modo continuo, solo hacer scroll suave al elemento
+        if (shouldScroll) {
+          const targetSection = document.getElementById(chapterId);
+          if (targetSection) {
+            const navBarHeight = 110;
+            const topPos = targetSection.getBoundingClientRect().top + window.scrollY - navBarHeight;
+            window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+          }
+        }
+      }
+
+      // Actualizar hash sin provocar salto brusco
+      if (history.replaceState) {
+        history.replaceState(null, '', `#${chapterId}`);
+      }
+    }
+
+    // 4. Conectar botones de modo de vista
+    modeChapterBtn?.addEventListener('click', () => applyViewMode('chapter', activeChapterId));
+    modeContinuousBtn?.addEventListener('click', () => applyViewMode('continuous', activeChapterId));
+
+    // 5. Conectar tabs de la barra de capítulos
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const chId = tab.dataset.chapterId;
+        if (chId) {
+          activateChapter(chId, true);
+        }
+      });
+    });
+
+    // 6. Interceptar enlaces internos que apunten a secciones o anclas internas
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement)?.closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+
+      const hashTarget = href.replace('#', '');
+      if (!hashTarget || hashTarget === 'top') return;
+
+      // Si es un ID de capítulo directo
+      if (validIds.includes(hashTarget)) {
+        e.preventDefault();
+        activateChapter(hashTarget, true);
+        return;
+      }
+
+      // Si es un ancla interna dentro de un capítulo (por ej. #before-after-slider, #ux-leyes, #spec)
+      const targetElement = document.getElementById(hashTarget);
+      if (targetElement) {
+        const parentChapter = targetElement.closest('section.ch') as HTMLElement | null;
+        if (parentChapter && validIds.includes(parentChapter.id)) {
+          e.preventDefault();
+          if (viewMode === 'chapter') {
+            activateChapter(parentChapter.id, false);
+          }
+          setTimeout(() => {
+            const navBarHeight = 115;
+            const topPos = targetElement.getBoundingClientRect().top + window.scrollY - navBarHeight;
+            window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+          }, 30);
+        }
+      }
+    });
+
+    // 7. Atajos de teclado: Alt + Flecha Derecha (Siguiente) / Alt + Flecha Izquierda (Anterior)
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+        const currentIndex = validIds.indexOf(activeChapterId);
+        if (currentIndex === -1) return;
+
+        if (e.key === 'ArrowRight' && currentIndex < validIds.length - 1) {
+          e.preventDefault();
+          activateChapter(validIds[currentIndex + 1], true);
+        } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+          e.preventDefault();
+          activateChapter(validIds[currentIndex - 1], true);
+        }
+      }
+    });
+
+    // Inicializar
+    applyViewMode(viewMode, activeChapterId);
+  }
+
+  setupNavigationSystem();
+  document.addEventListener('astro:page-load', setupNavigationSystem);
+</script>
