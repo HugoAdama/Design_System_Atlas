@@ -797,7 +797,7 @@ pre code {
   background: var(--paper-2);
   color: var(--ink);
   clip-path: inset(0 0 0 50%);
-  transition: clip-path 0.05s linear;
+  will-change: clip-path;
 }
 
 .split-badge {

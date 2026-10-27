@@ -80,6 +80,7 @@
 
     const layer = afterLayer;
     const h = handle;
+    let rafId: number | null = null;
 
     function updateSplit(pct: number) {
       layer.style.clipPath = `inset(0 0 0 ${pct}%)`;
@@ -87,8 +88,12 @@
     }
 
     rangeInput.addEventListener('input', () => {
-      const val = parseFloat(rangeInput.value);
-      updateSplit(val);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const val = parseFloat(rangeInput.value);
+        updateSplit(val);
+        rafId = null;
+      });
     });
 
     updateSplit(50);

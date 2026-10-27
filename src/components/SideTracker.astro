@@ -41,14 +41,18 @@ const sections = [
 
 <script>
   function setupSideTrackerAndReveal() {
-    // 1. Back to Top Button
+    // 1. Back to Top Button (throttled with rAF for 60 FPS)
     const backBtn = document.getElementById('back-to-top-btn');
     if (backBtn) {
+      let ticking = false;
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-          backBtn.classList.add('is-visible');
-        } else {
-          backBtn.classList.remove('is-visible');
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const isVisible = window.scrollY > 400;
+            backBtn.classList.toggle('is-visible', isVisible);
+            ticking = false;
+          });
+          ticking = true;
         }
       }, { passive: true });
 
